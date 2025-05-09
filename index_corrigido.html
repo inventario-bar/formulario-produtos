@@ -1,0 +1,397 @@
+
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Entrada de Produtos</title>
+  <style>
+    body { font-family: Arial, sans-serif; background: #f4f4f4; padding: 20px; }
+    form { background: #fff; padding: 20px; border-radius: 10px; max-width: 700px; margin: auto;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1); }
+    h2 { text-align: center; }
+    label { display: block; margin-top: 10px; }
+    input, select { width: 100%; padding: 8px; margin-top: 5px; }
+    .form-section { display: none; margin-top: 20px; }
+    button { margin-top: 20px; padding: 10px; width: 100%; background-color: #28a745;
+              border: none; color: white; font-size: 16px; border-radius: 5px; cursor: pointer; }
+  </style>
+</head>
+<body>
+<form id="entradaForm">
+<h2>Entrada de Produtos</h2>
+<label for="tipoEntrada">Tipo de Entrada</label>
+<select id="tipoEntrada" name="tipoEntrada" required>
+  <option value="">-- Selecione --</option>
+  <option value="novoProduto">Novo Produto</option>
+  <option value="cocktails">Cocktails</option>
+  <option value="lancamento">Lançamento</option>
+</select>
+
+<!-- Novo Produto -->
+<div class="form-section" id="novoProdutoFields">
+  <label for="nomeProduto">Nome do Produto</label>
+  <input type="text" id="nomeProduto" name="nomeProduto"/>
+  <label for="tipoGarrafa">Tipo de Garrafa</label>
+  <select id="tipoGarrafa" name="tipoGarrafa"><option value="garrafa 70cl">garrafa 70cl</option>
+<option value="garrafa 1lt">garrafa 1lt</option>
+<option value="garrafa 50cl">garrafa 50cl</option>
+<option value="garrafa 33cl">garrafa 33cl</option>
+<option value="garrafa 568ml">garrafa 568ml</option>
+<option value="garrafa 35cl">garrafa 35cl</option>
+<option value="garrafa 275ml">garrafa 275ml</option>
+<option value="garrafa 25cl">garrafa 25cl</option>
+<option value="garrafa 20 cl">garrafa 20 cl</option>
+<option value="lata 30cl">lata 30cl</option>
+<option value="garrafa 1,5lt">garrafa 1,5lt</option>
+<option value="lata 25cl">lata 25cl</option>
+<option value="garrafa 75cl">garrafa 75cl</option>
+<option value="lata 33cl">lata 33cl</option>
+<option value="barril 50lts">barril 50lts</option>
+<option value="barril 30lts">barril 30lts</option></select>
+  <label for="dosesGarrafa">Nº Doses por Garrafa</label>
+  <input type="number" id="dosesGarrafa" name="dosesGarrafa"/>
+  <label for="stockMinimo">Stock Mínimo</label>
+  <input type="number" id="stockMinimo" name="stockMinimo"/>
+</div>
+
+<!-- Cocktails -->
+<div class="form-section" id="cocktailsFields">
+  <label for="nomeCocktail">Nome do Cocktail</label>
+  <select id="nomeCocktail" name="nomeCocktail"><option value="long island ice tea">long island ice tea</option>
+<option value="tequilla sunrise">tequilla sunrise</option>
+<option value="caipirinha">caipirinha</option>
+<option value="frozen daiquiri">frozen daiquiri</option>
+<option value="frozen margarita">frozen margarita</option>
+<option value="pina colada">pina colada</option>
+<option value="passion gin fizz">passion gin fizz</option>
+<option value="sour cocktails">sour cocktails</option>
+<option value="pineapple moscow mule">pineapple moscow mule</option>
+<option value="blue lagoon">blue lagoon</option>
+<option value="virgin daiquiri">virgin daiquiri</option>
+<option value="caipiroska">caipiroska</option>
+<option value="mojito">mojito</option>
+<option value="sex on the beach">sex on the beach</option>
+<option value="malibu bay breeze">malibu bay breeze</option>
+<option value="cosmopolitan">cosmopolitan</option>
+<option value="pornstar martini">pornstar martini</option>
+<option value="expresso martini">expresso martini</option>
+<option value="la bamba tiki">la bamba tiki</option>
+<option value="mango mai tai">mango mai tai</option>
+<option value="virgin mojito">virgin mojito</option>
+<option value="dark and stormy">dark and stormy</option>
+<option value="vodka red bull">vodka red bull</option>
+<option value="rum red bull">rum red bull</option>
+<option value="whisky red bull">whisky red bull</option>
+<option value="ciroc reb bull">ciroc reb bull</option>
+<option value="grey goose reb bull">grey goose reb bull</option>
+<option value="jack daniels honey red bull">jack daniels honey red bull</option>
+<option value="absolut red bull">absolut red bull</option>
+<option value="extra red bull">extra red bull</option></select>
+  <label for="quantidadeCocktail">Quantidade</label>
+  <input type="number" id="quantidadeCocktail" name="quantidadeCocktail"/>
+  <label for="armazemCocktail">Armazém</label>
+  <select id="armazemCocktail" name="armazemCocktail">
+    <option value="Armazém 1">Armazém 1</option>
+    <option value="Armazém 2">Armazém 2</option>
+    <option value="Ofertas">Ofertas</option>
+  </select>
+  <label for="precoCocktail">Preço</label>
+  <input type="number" step="0.01" id="precoCocktail" name="precoCocktail"/>
+</div>
+
+<!-- Lançamento -->
+<div class="form-section" id="lancamentoFields">
+  <label for="produtoLancamento">Produto</label>
+  <select id="produtoLancamento" name="produtoLancamento"><option value="kraken">kraken</option>
+<option value="cacique">cacique</option>
+<option value="rum spice">rum spice</option>
+<option value="rum dry">rum dry</option>
+<option value="rum spice 1lt">rum spice 1lt</option>
+<option value="rum dark">rum dark</option>
+<option value="rum dark 1lt">rum dark 1lt</option>
+<option value="rum white">rum white</option>
+<option value="rum white 1lt">rum white 1lt</option>
+<option value="legendario">legendario</option>
+<option value="shipmaster">shipmaster</option>
+<option value="havana 7 anos">havana 7 anos</option>
+<option value="havana 3 anos">havana 3 anos</option>
+<option value="bacardi">bacardi</option>
+<option value="bacardi lemon">bacardi lemon</option>
+<option value="bacardi razz">bacardi razz</option>
+<option value="barcelo">barcelo</option>
+<option value="dead mans fingers">dead mans fingers</option>
+<option value="eristoff">eristoff</option>
+<option value="eristoff black">eristoff black</option>
+<option value="eristoff pink">eristoff pink</option>
+<option value="absolut">absolut</option>
+<option value="grey goose">grey goose</option>
+<option value="vodka morango">vodka morango</option>
+<option value="vodka caramelo">vodka caramelo</option>
+<option value="ciroc">ciroc</option>
+<option value="jack daniels 1lt">jack daniels 1lt</option>
+<option value="jack daniels">jack daniels</option>
+<option value="jack daniels fire">jack daniels fire</option>
+<option value="jack daniels honey">jack daniels honey</option>
+<option value="jack daniels apple">jack daniels apple</option>
+<option value="red label">red label</option>
+<option value="black label">black label</option>
+<option value="j b">j b</option>
+<option value="cutty sark">cutty sark</option>
+<option value="william lawsons">william lawsons</option>
+<option value="famous grouse">famous grouse</option>
+<option value="ballantines">ballantines</option>
+<option value="jameson">jameson</option>
+<option value="bombay dry">bombay dry</option>
+<option value="bombay saphire">bombay saphire</option>
+<option value="gin gordons">gin gordons</option>
+<option value="gordons pink">gordons pink</option>
+<option value="hendricks">hendricks</option>
+<option value="tanqueray">tanqueray</option>
+<option value="beefeater 24">beefeater 24</option>
+<option value="buldog">buldog</option>
+<option value="whitley neil">whitley neil</option>
+<option value="amareto disarono">amareto disarono</option>
+<option value="passoa">passoa</option>
+<option value="baileys">baileys</option>
+<option value="tia maria">tia maria</option>
+<option value="licor 43">licor 43</option>
+<option value="absinto">absinto</option>
+<option value="gold strike">gold strike</option>
+<option value="safari">safari</option>
+<option value="southern confort">southern confort</option>
+<option value="baileys 1lt">baileys 1lt</option>
+<option value="malibu">malibu</option>
+<option value="cointreau">cointreau</option>
+<option value="sambuca">sambuca</option>
+<option value="licor sourz apple">licor sourz apple</option>
+<option value="triple seco">triple seco</option>
+<option value="peach schnapps">peach schnapps</option>
+<option value="pisang ambom">pisang ambom</option>
+<option value="blue curaçao">blue curaçao</option>
+<option value="amarguinha">amarguinha</option>
+<option value="pimms">pimms</option>
+<option value="licor beirão">licor beirão</option>
+<option value="lime juice">lime juice</option>
+<option value="yegermester">yegermester</option>
+<option value="yagermester wolf">yagermester wolf</option>
+<option value="galliano">galliano</option>
+<option value="drambuie">drambuie</option>
+<option value="porto tawny">porto tawny</option>
+<option value="aperol">aperol</option>
+<option value="pernod">pernod</option>
+<option value="brandy macieira">brandy macieira</option>
+<option value="cachaça 51">cachaça 51</option>
+<option value="cognac henessy">cognac henessy</option>
+<option value="cognac courvoisier">cognac courvoisier</option>
+<option value="tequilla camino">tequilla camino</option>
+<option value="tequilla rosé">tequilla rosé</option>
+<option value="tequilla patron">tequilla patron</option>
+<option value="garrafa coors">garrafa coors</option>
+<option value="garrafa peroni">garrafa peroni</option>
+<option value="kopperberg">kopperberg</option>
+<option value="espumante corte real">espumante corte real</option>
+<option value="budweiser">budweiser</option>
+<option value="magners">magners</option>
+<option value="heineken">heineken</option>
+<option value="corona">corona</option>
+<option value="desperados">desperados</option>
+<option value="guiness">guiness</option>
+<option value="wkd">wkd</option>
+<option value="super bock">super bock</option>
+<option value="smirnoff ice">smirnoff ice</option>
+<option value="somersby">somersby</option>
+<option value="sagres">sagres</option>
+<option value="agua 33cl">agua 33cl</option>
+<option value="agua castelo">agua castelo</option>
+<option value="ginger ale">ginger ale</option>
+<option value="tonica">tonica</option>
+<option value="schweppes">schweppes</option>
+<option value="ginger beer">ginger beer</option>
+<option value="cola lata">cola lata</option>
+<option value="coca cola 1lt">coca cola 1lt</option>
+<option value="cola zero">cola zero</option>
+<option value="sumo de ananas">sumo de ananas</option>
+<option value="sumo de laranja">sumo de laranja</option>
+<option value="7 up">7 up</option>
+<option value="fanta">fanta</option>
+<option value="cranberry juice">cranberry juice</option>
+<option value="compal laranja">compal laranja</option>
+<option value="red bull">red bull</option>
+<option value="bepower">bepower</option>
+<option value="black energy">black energy</option>
+<option value="vinho branco">vinho branco</option>
+<option value="vinho tinto">vinho tinto</option>
+<option value="monin watermelon">monin watermelon</option>
+<option value="pure monin">pure monin</option>
+<option value="monin melon">monin melon</option>
+<option value="monin morango">monin morango</option>
+<option value="monin blue curacao">monin blue curacao</option>
+<option value="lime rantcho">lime rantcho</option>
+<option value="sweet and sour">sweet and sour</option>
+<option value="pure coco">pure coco</option>
+<option value="pure maracuja">pure maracuja</option>
+<option value="xarope amendoa">xarope amendoa</option>
+<option value="lemon rantcho">lemon rantcho</option>
+<option value="monin mojito mint">monin mojito mint</option>
+<option value="pure ananas">pure ananas</option>
+<option value="licor baunilha madagascar">licor baunilha madagascar</option>
+<option value="monin orange curaçao">monin orange curaçao</option>
+<option value="xarope rum caraibas">xarope rum caraibas</option>
+<option value="monin melon vert">monin melon vert</option>
+<option value="xarope cana acucar">xarope cana acucar</option>
+<option value="grenadine">grenadine</option>
+<option value="xarope cranberry">xarope cranberry</option>
+<option value="bulldog">bulldog</option>
+<option value="au">au</option>
+<option value="cracken">cracken</option>
+<option value="baccardi lemon">baccardi lemon</option>
+<option value="baccardi razz">baccardi razz</option>
+<option value="vinho rose">vinho rose</option>
+<option value="moet chandon">moet chandon</option>
+<option value="martell">martell</option>
+<option value="breezer">breezer</option>
+<option value="martini">martini</option>
+<option value="shots dia">shots dia</option>
+<option value="moet chandon ice rosé">moet chandon ice rosé</option>
+<option value="compal maçã">compal maçã</option>
+<option value="compal maracujá">compal maracujá</option>
+<option value="compal ananas">compal ananas</option>
+<option value="sumo limão">sumo limão</option>
+<option value="pure manga">pure manga</option>
+<option value="sagres zero">sagres zero</option>
+<option value="tequilla mexical">tequilla mexical</option>
+<option value="água">água</option>
+<option value="vodka smirnoff">vodka smirnoff</option>
+<option value="xarope groselha">xarope groselha</option>
+<option value="vodka smirnoff spice">vodka smirnoff spice</option>
+<option value="dewars">dewars</option>
+<option value="cardhu">cardhu</option>
+<option value="grants">grants</option>
+<option value="martini rosatto">martini rosatto</option>
+<option value="don julio repousado">don julio repousado</option>
+<option value="don julio branco">don julio branco</option>
+<option value="martini dry">martini dry</option>
+<option value="tanqueray zero">tanqueray zero</option>
+<option value="bombay blackberry">bombay blackberry</option>
+<option value="grey goose citron">grey goose citron</option>
+<option value="grey goose pera">grey goose pera</option>
+<option value="au pink lemonade">au pink lemonade</option>
+<option value="au watermelon">au watermelon</option>
+<option value="au bubblegum">au bubblegum</option>
+<option value="au grappe">au grappe</option>
+<option value="au pineapple">au pineapple</option>
+<option value="proseco">proseco</option>
+<option value="casal mendes">casal mendes</option>
+<option value="shot melão">shot melão</option>
+<option value="shot caramelo">shot caramelo</option>
+<option value="shot morango">shot morango</option>
+<option value="moet chandon ice imperial">moet chandon ice imperial</option>
+<option value="moet chandon imperial">moet chandon imperial</option>
+<option value="moet chandon rose">moet chandon rose</option>
+<option value="dom perignon">dom perignon</option>
+<option value="laurent perrier">laurent perrier</option>
+<option value="laurent perrier rose">laurent perrier rose</option>
+<option value="zacapa 23">zacapa 23</option>
+<option value="passoa 70CL">passoa 70CL</option>
+<option value="fee foam">fee foam</option>
+<option value="campari">campari</option>
+<option value="ciroc ananas">ciroc ananas</option>
+<option value="ciroc manga">ciroc manga</option>
+<option value="wray nephew">wray nephew</option>
+<option value="remy martin">remy martin</option>
+<option value="grey goose orange">grey goose orange</option>
+<option value="ciroc promenegate">ciroc promenegate</option>
+<option value="jameson 70cl">jameson 70cl</option>
+<option value="safari 1lt">safari 1lt</option>
+<option value="bombay">bombay</option>
+<option value="falernum">falernum</option>
+<option value="tequilla">tequilla</option>
+<option value="licor banana">licor banana</option>
+<option value="pure lime">pure lime</option>
+<option value="monin red berries">monin red berries</option>
+<option value="agua penacova 1,5lt">agua penacova 1,5lt</option>
+<option value="Penacova 33cl">Penacova 33cl</option>
+<option value="porta ravessa tinto">porta ravessa tinto</option>
+<option value="bacardi spiced">bacardi spiced</option>
+<option value="barril 50lts">barril 50lts</option>
+<option value="barril 30lts">barril 30lts</option>
+<option value="barril somersby">barril somersby</option>
+<option value="sumo de limão">sumo de limão</option>
+<option value="barril peroni">barril peroni</option>
+<option value="barril coors">barril coors</option>
+<option value="barril kopperberg">barril kopperberg</option></select>
+  <label for="quantidadeLancamento">Quantidade</label>
+  <input type="number" id="quantidadeLancamento" name="quantidadeLancamento"/>
+  <label for="armazemLancamento">Armazém</label>
+  <select id="armazemLancamento" name="armazemLancamento">
+    <option value="Armazém 1">Armazém 1</option>
+    <option value="Armazém 2">Armazém 2</option>
+    <option value="Ofertas">Ofertas</option>
+  </select>
+  <label for="tipoLancamento">Tipo de Lançamento</label>
+  <select id="tipoLancamento" name="tipoLancamento">
+    <option value="Compra">Compra</option>
+    <option value="Venda">Venda</option>
+    <option value="Oferta">Oferta</option>
+  </select>
+  <label for="precoLancamento">Preço</label>
+  <input type="number" step="0.01" id="precoLancamento" name="precoLancamento"/>
+</div>
+
+<button type="submit">Enviar</button>
+<p id="mensagem" style="text-align:center;margin-top:10px;"></p>
+</form>
+
+<script>
+  const tipoEntrada = document.getElementById('tipoEntrada');
+  const sections = {
+    novoProduto: document.getElementById('novoProdutoFields'),
+    cocktails: document.getElementById('cocktailsFields'),
+    lancamento: document.getElementById('lancamentoFields')
+  };
+  tipoEntrada.addEventListener('change', function () {
+    for (const key in sections) sections[key].style.display = 'none';
+    if (sections[this.value]) sections[this.value].style.display = 'block';
+  });
+
+  document.getElementById("entradaForm").addEventListener("submit", function(e) {
+    e.preventDefault();
+    const form = e.target;
+    
+    const tipo = tipoEntrada.value;
+    const formData = new FormData();
+    formData.append("tipoEntrada", tipo);
+
+    if (tipo === "novoProduto") {
+      formData.append("nomeProduto", document.getElementById("nomeProduto").value);
+      formData.append("tipoGarrafa", document.getElementById("tipoGarrafa").value);
+      formData.append("dosesGarrafa", document.getElementById("dosesGarrafa").value);
+      formData.append("stockMinimo", document.getElementById("stockMinimo").value);
+    } else if (tipo === "cocktails") {
+      formData.append("nomeCocktail", document.getElementById("nomeCocktail").value);
+      formData.append("quantidadeCocktail", document.getElementById("quantidadeCocktail").value);
+      formData.append("armazemCocktail", document.getElementById("armazemCocktail").value);
+      formData.append("precoCocktail", document.getElementById("precoCocktail").value);
+    } else if (tipo === "lancamento") {
+      formData.append("produtoLancamento", document.getElementById("produtoLancamento").value);
+      formData.append("quantidadeLancamento", document.getElementById("quantidadeLancamento").value);
+      formData.append("armazemLancamento", document.getElementById("armazemLancamento").value);
+      formData.append("tipoLancamento", document.getElementById("tipoLancamento").value);
+      formData.append("precoLancamento", document.getElementById("precoLancamento").value);
+    }
+
+    fetch("https://script.google.com/macros/s/AKfycbx-XeTMrwhYeKGuEOUREhIc8QMVqPgjFHAhsmH-BezstfCHiIf1R0NLu1dRr4aEEKX_ig/exec", {
+      method: "POST",
+      body: formData
+    }).then(response => {
+      document.getElementById("mensagem").innerText = "✅ Enviado com sucesso!";
+      form.reset();
+      for (const key in sections) sections[key].style.display = 'none';
+    }).catch(error => {
+      document.getElementById("mensagem").innerText = "❌ Erro ao enviar.";
+    });
+  });
+</script>
+</body>
+</html>
