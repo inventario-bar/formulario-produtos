@@ -1,0 +1,102 @@
+
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Entrada de Produtos</title>
+  <style>
+    body { font-family: Arial, sans-serif; background: #f4f4f4; padding: 20px; }
+    form { background: #fff; padding: 20px; border-radius: 10px; max-width: 600px; margin: auto;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1); }
+    h2 { text-align: center; }
+    label { display: block; margin-top: 10px; }
+    input, select { width: 100%; padding: 8px; margin-top: 5px; }
+    .form-section { display: none; margin-top: 20px; }
+    button { margin-top: 20px; padding: 10px; width: 100%; background-color: #28a745;
+              border: none; color: white; font-size: 16px; border-radius: 5px; cursor: pointer; }
+  </style>
+</head>
+<body>
+<form id="entradaForm">
+<h2>Entrada de Produtos</h2>
+<label for="tipoEntrada">Tipo de Entrada</label>
+<select id="tipoEntrada" name="tipoEntrada" required>
+  <option value="">-- Selecione --</option>
+  <option value="novoProduto">Novo Produto</option>
+  <option value="cocktails">Cocktails</option>
+  <option value="lancamento">Lançamento</option>
+</select>
+
+<!-- Novo Produto -->
+<div class="form-section" id="novoProdutoFields">
+  <label for="nomeProduto">Nome do Produto</label>
+  <input type="text" id="nomeProduto" name="nomeProduto"/>
+  <label for="tipoGarrafa">Tipo de Garrafa</label>
+  <input type="text" id="tipoGarrafa" name="tipoGarrafa"/>
+  <label for="dosesGarrafa">Nº Doses por Garrafa</label>
+  <input type="number" id="dosesGarrafa" name="dosesGarrafa"/>
+  <label for="stockMinimo">Stock Mínimo</label>
+  <input type="number" id="stockMinimo" name="stockMinimo"/>
+</div>
+
+<!-- Cocktails -->
+<div class="form-section" id="cocktailsFields">
+  <label for="nomeCocktail">Nome do Cocktail</label>
+  <input type="text" id="nomeCocktail" name="nomeCocktail"/>
+  <label for="quantidadeCocktail">Quantidade</label>
+  <input type="number" id="quantidadeCocktail" name="quantidadeCocktail"/>
+  <label for="armazemCocktail">Armazém</label>
+  <input type="text" id="armazemCocktail" name="armazemCocktail"/>
+  <label for="precoCocktail">Preço</label>
+  <input type="number" step="0.01" id="precoCocktail" name="precoCocktail"/>
+</div>
+
+<!-- Lançamento -->
+<div class="form-section" id="lancamentoFields">
+  <label for="produtoLancamento">Produto</label>
+  <input type="text" id="produtoLancamento" name="produtoLancamento"/>
+  <label for="quantidadeLancamento">Quantidade</label>
+  <input type="number" id="quantidadeLancamento" name="quantidadeLancamento"/>
+  <label for="armazemLancamento">Armazém</label>
+  <input type="text" id="armazemLancamento" name="armazemLancamento"/>
+  <label for="tipoLancamento">Tipo de Lançamento</label>
+  <input type="text" id="tipoLancamento" name="tipoLancamento"/>
+  <label for="precoLancamento">Preço</label>
+  <input type="number" step="0.01" id="precoLancamento" name="precoLancamento"/>
+</div>
+
+<button type="submit">Enviar</button>
+<p id="mensagem" style="text-align:center;margin-top:10px;"></p>
+</form>
+
+<script>
+  const tipoEntrada = document.getElementById('tipoEntrada');
+  const sections = {
+    novoProduto: document.getElementById('novoProdutoFields'),
+    cocktails: document.getElementById('cocktailsFields'),
+    lancamento: document.getElementById('lancamentoFields')
+  };
+  tipoEntrada.addEventListener('change', function () {
+    for (const key in sections) sections[key].style.display = 'none';
+    if (sections[this.value]) sections[this.value].style.display = 'block';
+  });
+
+  document.getElementById("entradaForm").addEventListener("submit", function(e) {
+    e.preventDefault();
+    const form = e.target;
+    const data = new FormData(form);
+    fetch("https://script.google.com/macros/s/AKfycbx-XeTMrwhYeKGuEOUREhIc8QMVqPgjFHAhsmH-BezstfCHiIf1R0NLu1dRr4aEEKX_ig/exec", {
+      method: "POST",
+      body: data
+    }).then(response => {
+      document.getElementById("mensagem").innerText = "✅ Enviado com sucesso!";
+      form.reset();
+      for (const key in sections) sections[key].style.display = 'none';
+    }).catch(error => {
+      document.getElementById("mensagem").innerText = "❌ Erro ao enviar.";
+    });
+  });
+</script>
+</body>
+</html>
