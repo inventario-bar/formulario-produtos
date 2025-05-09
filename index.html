@@ -1,0 +1,177 @@
+
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Entrada de Produtos</title>
+  <style>
+    body { font-family: Arial, sans-serif; background: #f4f4f4; padding: 20px; }
+    form { background: #fff; padding: 20px; border-radius: 10px; max-width: 800px; margin: auto;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1); }
+    h2 { text-align: center; }
+    label { display: block; margin-top: 10px; }
+    input, select { width: 100%; padding: 8px; margin-top: 5px; }
+    .form-section { display: none; margin-top: 20px; }
+    button { margin-top: 20px; padding: 10px; width: 100%; background-color: #28a745;
+              border: none; color: white; font-size: 16px; border-radius: 5px; cursor: pointer; }
+  </style>
+</head>
+<body>
+<form id="entradaForm">
+<h2>Entrada de Produtos</h2>
+<label for="tipoEntrada">Tipo de Entrada</label>
+<select id="tipoEntrada" name="tipoEntrada" required>
+  <option value="">-- Selecione --</option>
+  <option value="novoProduto">Novo Produto</option>
+  <option value="cocktails">Cocktails</option>
+  <option value="lancamento">Lançamento</option>
+</select>
+
+<!-- Novo Produto -->
+<div class="form-section" id="novoProdutoFields">
+  <label for="nomeProduto">Nome do Produto</label>
+  <select id="nomeProduto" name="nomeProduto">
+    <option value="">-- Selecione --</option>
+    <option value="kraken">kraken</option>
+    <option value="cacique">cacique</option>
+    <option value="rum spice">rum spice</option>
+    <option value="rum dry">rum dry</option>
+    <option value="rum spice 1lt">rum spice 1lt</option>
+    <option value="rum dark">rum dark</option>
+    <option value="rum dark 1lt">rum dark 1lt</option>
+    <option value="rum white">rum white</option>
+    <option value="rum white 1lt">rum white 1lt</option>
+    <option value="legendario">legendario</option>
+    <option value="shipmaster">shipmaster</option>
+    <option value="havana 7 anos">havana 7 anos</option>
+    <option value="havana 3 anos">havana 3 anos</option>
+    <option value="bacardi">bacardi</option>
+    <option value="bacardi lemon">bacardi lemon</option>
+    <option value="bacardi razz">bacardi razz</option>
+    <option value="barcelo">barcelo</option>
+    <option value="dead mans fingers">dead mans fingers</option>
+    <option value="eristoff">eristoff</option>
+    <option value="eristoff black">eristoff black</option>
+    <option value="eristoff pink">eristoff pink</option>
+    <option value="absolut">absolut</option>
+    <option value="grey goose">grey goose</option>
+    <option value="vodka morango">vodka morango</option>
+    <option value="vodka caramelo">vodka caramelo</option>
+    <option value="ciroc">ciroc</option>
+    <!-- ... Adiciona aqui os restantes produtos como combinámos antes ... -->
+  </select>
+  <label for="tipoGarrafa">Tipo de Garrafa</label>
+  <select id="tipoGarrafa" name="tipoGarrafa">
+    <option value="garrafa 70cl">garrafa 70cl</option>
+    <option value="garrafa 1lt">garrafa 1lt</option>
+    <option value="garrafa 50cl">garrafa 50cl</option>
+    <option value="garrafa 33cl">garrafa 33cl</option>
+    <option value="garrafa 568ml">garrafa 568ml</option>
+    <option value="garrafa 35cl">garrafa 35cl</option>
+    <option value="garrafa 275ml">garrafa 275ml</option>
+    <option value="garrafa 25cl">garrafa 25cl</option>
+    <option value="garrafa 20 cl">garrafa 20 cl</option>
+    <option value="lata 30cl">lata 30cl</option>
+    <option value="garrafa 1,5lt">garrafa 1,5lt</option>
+    <option value="lata 25cl">lata 25cl</option>
+    <option value="garrafa 75cl">garrafa 75cl</option>
+    <option value="lata 33cl">lata 33cl</option>
+    <option value="barril 50lts">barril 50lts</option>
+    <option value="barril 30lts">barril 30lts</option>
+  </select>
+  <label for="dosesGarrafa">Nº Doses por Garrafa</label>
+  <input type="number" id="dosesGarrafa" name="dosesGarrafa"/>
+  <label for="stockMinimo">Stock Mínimo</label>
+  <input type="number" id="stockMinimo" name="stockMinimo"/>
+</div>
+
+<!-- Cocktails -->
+<div class="form-section" id="cocktailsFields">
+  <label for="nomeCocktail">Nome do Cocktail</label>
+  <select id="nomeCocktail" name="nomeCocktail">
+    <option value="long island ice tea">long island ice tea</option>
+    <option value="mojito">mojito</option>
+    <option value="pina colada">pina colada</option>
+    <option value="sex on the beach">sex on the beach</option>
+    <option value="pornstar martini">pornstar martini</option>
+    <!-- ... Adiciona todos os restantes cocktails ... -->
+  </select>
+  <label for="quantidadeCocktail">Quantidade</label>
+  <input type="number" id="quantidadeCocktail" name="quantidadeCocktail"/>
+  <label for="armazemCocktail">Armazém</label>
+  <select id="armazemCocktail" name="armazemCocktail">
+    <option value="Armazém 1">Armazém 1</option>
+    <option value="Armazém 2">Armazém 2</option>
+    <option value="Ofertas">Ofertas</option>
+  </select>
+  <label for="precoCocktail">Preço</label>
+  <input type="number" step="0.01" id="precoCocktail" name="precoCocktail"/>
+</div>
+
+<!-- Lançamento -->
+<div class="form-section" id="lancamentoFields">
+  <label for="produtoLancamento">Produto</label>
+  <select id="produtoLancamento" name="produtoLancamento">
+    <option value="kraken">kraken</option>
+    <option value="cacique">cacique</option>
+    <option value="rum spice">rum spice</option>
+    <option value="rum dry">rum dry</option>
+    <option value="absolut">absolut</option>
+    <option value="bacardi">bacardi</option>
+    <!-- ... Adiciona o restante ... -->
+  </select>
+  <label for="quantidadeLancamento">Quantidade</label>
+  <input type="number" id="quantidadeLancamento" name="quantidadeLancamento"/>
+  <label for="armazemLancamento">Armazém</label>
+  <select id="armazemLancamento" name="armazemLancamento">
+    <option value="Armazém 1">Armazém 1</option>
+    <option value="Armazém 2">Armazém 2</option>
+    <option value="Ofertas">Ofertas</option>
+  </select>
+  <label for="tipoLancamento">Tipo de Lançamento</label>
+  <select id="tipoLancamento" name="tipoLancamento">
+    <option value="Compra">Compra</option>
+    <option value="Venda">Venda</option>
+    <option value="Oferta">Oferta</option>
+    <option value="Inventário">Inventário</option>
+  </select>
+  <label for="precoLancamento">Preço</label>
+  <input type="number" step="0.01" id="precoLancamento" name="precoLancamento"/>
+</div>
+
+<button type="submit">Enviar</button>
+<p id="mensagem" style="text-align:center;margin-top:10px;"></p>
+</form>
+
+<script>
+  const tipoEntrada = document.getElementById('tipoEntrada');
+  const sections = {
+    novoProduto: document.getElementById('novoProdutoFields'),
+    cocktails: document.getElementById('cocktailsFields'),
+    lancamento: document.getElementById('lancamentoFields')
+  };
+
+  tipoEntrada.addEventListener('change', function () {
+    for (const key in sections) sections[key].style.display = 'none';
+    if (sections[this.value]) sections[this.value].style.display = 'block';
+  });
+
+  document.getElementById("entradaForm").addEventListener("submit", function(e) {
+    e.preventDefault();
+    const form = e.target;
+    const data = new FormData(form);
+    fetch("https://script.google.com/macros/s/AKfycbx-XeTMrwhYeKGuEOUREhIc8QMVqPgjFHAhsmH-BezstfCHiIf1R0NLu1dRr4aEEKX_ig/exec", {
+      method: "POST",
+      body: data
+    }).then(response => {
+      document.getElementById("mensagem").innerText = "✅ Enviado com sucesso!";
+      form.reset();
+      for (const key in sections) sections[key].style.display = 'none';
+    }).catch(error => {
+      document.getElementById("mensagem").innerText = "❌ Erro ao enviar.";
+    });
+  });
+</script>
+</body>
+</html>
