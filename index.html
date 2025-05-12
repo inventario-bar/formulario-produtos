@@ -157,7 +157,44 @@
 
     preencherSelect("armazemCocktail", ["Cocktails Armazém 1", "Cocktails Armazém 2 e Ofertas"], "Seleciona um armazém");
     preencherSelect("armazemLancamento", ["Armazém 1", "Armazém 2 e Ofertas"], "Seleciona um armazém");
+
+    document.getElementById("entradaForm").addEventListener("submit", function (e) {
+      e.preventDefault();
+      const tipo = document.getElementById("tipoEntrada").value;
+      const data = new FormData();
+      data.append("tipoEntrada", tipo);
+
+      if (tipo === "novoProduto") {
+        data.append("nomeProduto", document.getElementById("nomeProduto").value);
+        data.append("tipoGarrafa", document.getElementById("tipoGarrafa").value);
+        data.append("dosesGarrafa", document.getElementById("dosesGarrafa").value);
+        data.append("stockMinimo", document.getElementById("stockMinimo").value);
+      } else if (tipo === "cocktails") {
+        data.append("nomeCocktail", document.getElementById("nomeCocktail").value);
+        data.append("quantidadeCocktail", document.getElementById("quantidadeCocktail").value);
+        data.append("armazemCocktail", document.getElementById("armazemCocktail").value);
+        data.append("precoCocktail", document.getElementById("precoCocktail").value);
+      } else if (tipo === "lancamento") {
+        data.append("produtoLancamento", document.getElementById("produtoLancamento").value);
+        data.append("quantidadeLancamento", document.getElementById("quantidadeLancamento").value);
+        data.append("armazemLancamento", document.getElementById("armazemLancamento").value);
+        data.append("tipoLancamento", document.getElementById("tipoLancamento").value);
+        data.append("precoLancamento", document.getElementById("precoLancamento").value);
+      }
+
+      fetch("https://script.google.com/macros/s/SEU_SCRIPT_ID/exec", {
+        method: "POST",
+        body: data
+      })
+      .then(() => {
+        document.getElementById("mensagem").innerText = "✅ Enviado com sucesso!";
+        this.reset();
+        document.querySelectorAll(".form-section").forEach(el => el.classList.add("hidden"));
+      })
+      .catch(() => {
+        document.getElementById("mensagem").innerText = "❌ Erro ao enviar.";
+      });
+    });
   </script>
 </body>
 </html>
-
