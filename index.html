@@ -88,7 +88,7 @@
   <option value="">-- Selecione --</option>
   <option value="novoProduto">Novo Produto</option>
   <option value="cocktails">Cocktails</option>
-  <option value="lancamento">Lançamento</option>
+  <option value="lancamento">Lçamento</option>
 </select>
 
 <!-- Novo Produto -->
@@ -97,8 +97,7 @@
   <input type="text" id="nomeProduto" name="nomeProduto"/>
   <label for="tipoGarrafa">Tipo de Garrafa</label>
   <select id="tipoGarrafa" name="tipoGarrafa">
-    <option value="garrafa 70cl">garrafa 70cl</option>
-    <option value="garrafa 1lt">garrafa 1lt</option>
+    <option value="">Seleciona o tipo de garrafa</option>
   </select>
   <label for="dosesGarrafa">Nº Doses por Garrafa</label>
   <input type="number" id="dosesGarrafa" name="dosesGarrafa"/>
@@ -226,38 +225,46 @@
     });
   });
 
-  // Carregar lista de produtos para o campo de lançamento
+  // Produtos
   fetch('produtos.json')
-    .then(response => response.json())
-    .then(produtos => {
-      const selectProduto = document.getElementById('produtoLancamento');
-      selectProduto.innerHTML = '<option value="">Seleciona um produto</option>';
-      produtos.forEach(produto => {
-        const option = document.createElement('option');
-        option.value = produto;
-        option.textContent = produto;
-        selectProduto.appendChild(option);
+    .then(res => res.json())
+    .then(data => {
+      const select = document.getElementById('produtoLancamento');
+      select.innerHTML = '<option value="">Seleciona um produto</option>';
+      data.forEach(item => {
+        const opt = document.createElement('option');
+        opt.value = item;
+        opt.textContent = item;
+        select.appendChild(opt);
       });
-    })
-    .catch(error => {
-      console.error('Erro ao carregar produtos:', error);
     });
 
-  // Carregar lista de cocktails
+  // Cocktails
   fetch('cocktails.json')
-    .then(response => response.json())
-    .then(cocktails => {
-      const selectCocktail = document.getElementById('nomeCocktail');
-      selectCocktail.innerHTML = '<option value="">Seleciona um cocktail</option>';
-      cocktails.forEach(cocktail => {
-        const option = document.createElement('option');
-        option.value = cocktail;
-        option.textContent = cocktail;
-        selectCocktail.appendChild(option);
+    .then(res => res.json())
+    .then(data => {
+      const select = document.getElementById('nomeCocktail');
+      select.innerHTML = '<option value="">Seleciona um cocktail</option>';
+      data.forEach(item => {
+        const opt = document.createElement('option');
+        opt.value = item;
+        opt.textContent = item;
+        select.appendChild(opt);
       });
-    })
-    .catch(error => {
-      console.error('Erro ao carregar cocktails:', error);
+    });
+
+  // Tipos de Garrafa
+  fetch('garrafas.json')
+    .then(res => res.json())
+    .then(data => {
+      const select = document.getElementById('tipoGarrafa');
+      select.innerHTML = '<option value="">Seleciona o tipo de garrafa</option>';
+      data.forEach(item => {
+        const opt = document.createElement('option');
+        opt.value = item;
+        opt.textContent = item;
+        select.appendChild(opt);
+      });
     });
 </script>
 </body>
