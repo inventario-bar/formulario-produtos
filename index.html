@@ -5,6 +5,10 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Formulário de Produtos</title>
   <script src="https://cdn.tailwindcss.com"></script>
+
+  <!-- PWA Support -->
+  <link rel="manifest" href="manifest.json">
+  <meta name="theme-color" content="#28a745">
 </head>
 <body class="bg-gray-100 min-h-screen py-10 px-4">
   <form id="entradaForm" class="bg-white shadow-md rounded-xl max-w-2xl mx-auto p-6 space-y-6">
@@ -163,6 +167,14 @@
         mensagem.textContent = "❌ Erro ao enviar.";
       });
     });
+
+    // Service Worker para PWA
+    if ('serviceWorker' in navigator) {
+      navigator.serviceWorker.register('sw.js')
+        .then(() => console.log('✔️ Service Worker registado'))
+        .catch(err => console.error('Erro ao registar o Service Worker:', err));
+    }
   </script>
 </body>
 </html>
+
