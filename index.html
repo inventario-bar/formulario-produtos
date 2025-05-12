@@ -128,6 +128,36 @@
         sections[this.value].classList.remove("hidden");
       }
     });
+
+    function preencherSelect(id, dados, placeholder) {
+      const select = document.getElementById(id);
+      select.innerHTML = `<option value="">${placeholder}</option>`;
+      dados.forEach(item => {
+        const option = document.createElement("option");
+        option.value = item;
+        option.textContent = item;
+        select.appendChild(option);
+      });
+    }
+
+    fetch("produtos.json")
+      .then(r => r.json())
+      .then(produtos => preencherSelect("produtoLancamento", produtos, "Seleciona um produto"))
+      .catch(err => console.error("Erro ao carregar produtos:", err));
+
+    fetch("cocktails.json")
+      .then(r => r.json())
+      .then(cocktails => preencherSelect("nomeCocktail", cocktails, "Seleciona um cocktail"))
+      .catch(err => console.error("Erro ao carregar cocktails:", err));
+
+    fetch("garrafas.json")
+      .then(r => r.json())
+      .then(garrafas => preencherSelect("tipoGarrafa", garrafas, "Seleciona o tipo de garrafa"))
+      .catch(err => console.error("Erro ao carregar garrafas:", err));
+
+    preencherSelect("armazemCocktail", ["Cocktails Armazém 1", "Cocktails Armazém 2 e Ofertas"], "Seleciona um armazém");
+    preencherSelect("armazemLancamento", ["Armazém 1", "Armazém 2 e Ofertas"], "Seleciona um armazém");
   </script>
 </body>
 </html>
+
