@@ -111,6 +111,23 @@
     <button type="submit" class="w-full bg-green-600 text-white py-3 rounded-lg hover:bg-green-700 transition">Enviar</button>
     <p id="mensagem" class="text-center text-sm text-gray-600"></p>
   </form>
+
+  <script>
+    const tipoEntrada = document.getElementById("tipoEntrada");
+    const sections = {
+      novoProduto: document.getElementById("novoProdutoFields"),
+      cocktails: document.getElementById("cocktailsFields"),
+      lancamento: document.getElementById("lancamentoFields")
+    };
+
+    tipoEntrada.addEventListener("change", function () {
+      for (const key in sections) {
+        sections[key].classList.add("hidden");
+      }
+      if (sections[this.value]) {
+        sections[this.value].classList.remove("hidden");
+      }
+    });
+  </script>
 </body>
 </html>
-
