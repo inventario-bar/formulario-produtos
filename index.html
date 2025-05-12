@@ -172,10 +172,51 @@
     });
   }
 
-  setArmazemOptions("armazemCocktail", ["Cocktails Armazém 1", "Cocktails Armazém 2", "Ofertas"]);
-  setArmazemOptions("armazemLancamento", ["Armazém 1", "Armazém 2", "Ofertas"]);
+  setArmazemOptions("armazemCocktail", ["Cocktails Armazém 1", "Cocktails Armazém 2 e Ofertas"]);
+  setArmazemOptions("armazemLancamento", ["Armazém 1", "Armazém 2 e Ofertas"]);
 
-  // restante script permanece igual...
+  // Produtos
+  fetch('produtos.json')
+    .then(res => res.json())
+    .then(data => {
+      const select = document.getElementById('produtoLancamento');
+      select.innerHTML = '<option value="">Seleciona um produto</option>';
+      data.forEach(item => {
+        const opt = document.createElement('option');
+        opt.value = item;
+        opt.textContent = item;
+        select.appendChild(opt);
+      });
+    });
+
+  // Cocktails
+  fetch('cocktails.json')
+    .then(res => res.json())
+    .then(data => {
+      const select = document.getElementById('nomeCocktail');
+      select.innerHTML = '<option value="">Seleciona um cocktail</option>';
+      data.forEach(item => {
+        const opt = document.createElement('option');
+        opt.value = item;
+        opt.textContent = item;
+        select.appendChild(opt);
+      });
+    });
+
+  // Tipos de Garrafa
+  fetch('garrafas.json')
+    .then(res => res.json())
+    .then(data => {
+      const select = document.getElementById('tipoGarrafa');
+      select.innerHTML = '<option value="">Seleciona o tipo de garrafa</option>';
+      data.forEach(item => {
+        const opt = document.createElement('option');
+        opt.value = item;
+        opt.textContent = item;
+        select.appendChild(opt);
+      });
+    });
 </script>
 </body>
 </html>
+
