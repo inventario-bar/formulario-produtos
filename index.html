@@ -155,16 +155,19 @@
         data.append("tipoLancamento", tipoLancamento.value);
         data.append("precoLancamento", precoLancamento.value);
       }
-        https://script.google.com/macros/s/AKfycbxyW9eyCB-w-LlK5h9M0EzuMn8ajumDA4gJJ-0wDSDgigJLONlK2ZFUsQsslFngtOgt/exec, {
-        method: "POST",
-        body: data
-      }).then(() => {
-        mensagem.textContent = "✅ Enviado com sucesso!";
-        entradaForm.reset();
-        for (const key in sections) sections[key].classList.add("hidden");
-      }).catch(() => {
-        mensagem.textContent = "❌ Erro ao enviar.";
-      });
+       fetch("https://script.google.com/macros/s/AKfycbxyW9eyCB-w-LlK5h9M0EzuMn8ajumDA4gJJ-0wDSDgigJLONlK2ZFUsQsslFngtOgt/exec", {
+  method: "POST",
+  body: data
+})
+.then(() => {
+  mensagem.textContent = "✅ Enviado com sucesso!";
+  entradaForm.reset();
+  for (const key in sections) sections[key].classList.add("hidden");
+})
+.catch(() => {
+  mensagem.textContent = "❌ Erro ao enviar.";
+});
+
     });
 
     // Service Worker para PWA
