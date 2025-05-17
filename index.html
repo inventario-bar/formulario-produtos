@@ -152,7 +152,8 @@
       }).then(() => {
         mensagem.textContent = "✅ Enviado com sucesso!";
         entradaForm.reset();
-        for (const key in sections) sections[key].classList.add("hidden");
+       tipoEntrada.value = ""; // <- Isto evita travar o formulário após o primeiro envio
+       for (const key in sections) sections[key].classList.add("hidden");
       }).catch(() => {
         mensagem.textContent = "❌ Erro ao enviar.";
       });
