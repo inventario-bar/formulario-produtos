@@ -5,21 +5,11 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Formulário de Produtos</title>
   <script src="https://cdn.tailwindcss.com"></script>
-
-  <!-- PWA Support -->
   <link rel="manifest" href="manifest.json">
   <meta name="theme-color" content="#28a745">
 </head>
 <body class="bg-gray-100 min-h-screen py-10 px-4">
   <form id="entradaForm" class="bg-white shadow-md rounded-xl max-w-2xl mx-auto p-6 space-y-6">
-
-    <a href="https://inventario-bar.github.io/formulario-produtos/" class="inline-flex items-center text-blue-600 hover:text-blue-800 font-medium mb-2">
-      <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-1" viewBox="0 0 20 20" fill="currentColor">
-        <path fill-rule="evenodd" d="M10 18a1 1 0 01-.707-.293l-6-6a1 1 0 010-1.414l6-6a1 1 0 111.414 1.414L6.414 10l5.293 5.293A1 1 0 0110 18z" clip-rule="evenodd" />
-      </svg>
-      Voltar à página inicial
-    </a>
-
     <h2 class="text-2xl font-bold text-center text-gray-800">Entrada de Produtos</h2>
 
     <div>
@@ -129,8 +119,8 @@
     fetch("cocktails.json").then(r => r.json()).then(data => preencherSelect("nomeCocktail", data, "Seleciona um cocktail"));
     fetch("garrafas.json").then(r => r.json()).then(data => preencherSelect("tipoGarrafa", data, "Seleciona o tipo de garrafa"));
 
-    preencherSelect("armazemCocktail", ["Cocktails Armazém 1", "Cocktails Armazém 2 e Ofertas"], "Seleciona um armazém");
-    preencherSelect("armazemLancamento", ["Armazém 1", "Armazém 2 e Ofertas"], "Seleciona um armazém");
+    preencherSelect("armazemCocktail", ["ARMAZÉM 1", "ARMAZÉM 2 E OFERTAS"], "Seleciona um armazém");
+    preencherSelect("armazemLancamento", ["ARMAZÉM 1", "ARMAZÉM 2 E OFERTAS"], "Seleciona um armazém");
 
     document.getElementById("entradaForm").addEventListener("submit", function (e) {
       e.preventDefault();
@@ -155,22 +145,19 @@
         data.append("tipoLancamento", tipoLancamento.value);
         data.append("precoLancamento", precoLancamento.value);
       }
-       fetch("https://script.google.com/macros/s/AKfycbxyW9eyCB-w-LlK5h9M0EzuMn8ajumDA4gJJ-0wDSDgigJLONlK2ZFUsQsslFngtOgt/exec", {
+
+      fetch("https://script.google.com/macros/s/AKfycbxyW9eyCB-w-LlK5h9M0EzuMn8ajumDA4gJJ-0wDSDgigJLONlK2ZFUsQsslFngtOgt/exec", {
         method: "POST",
         body: data
-})
-.then(() => {
-  mensagem.textContent = "✅ Enviado com sucesso!";
-  entradaForm.reset();
-  for (const key in sections) sections[key].classList.add("hidden");
-})
-.catch(() => {
-  mensagem.textContent = "❌ Erro ao enviar.";
-});
-
+      }).then(() => {
+        mensagem.textContent = "✅ Enviado com sucesso!";
+        entradaForm.reset();
+        for (const key in sections) sections[key].classList.add("hidden");
+      }).catch(() => {
+        mensagem.textContent = "❌ Erro ao enviar.";
+      });
     });
 
-    // Service Worker para PWA
     if ('serviceWorker' in navigator) {
       navigator.serviceWorker.register('sw.js')
         .then(() => console.log('✔️ Service Worker registado'))
@@ -179,4 +166,3 @@
   </script>
 </body>
 </html>
-
