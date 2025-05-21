@@ -205,21 +205,30 @@
       entradaForm.reset();
       tipoEntrada.value = "";
       Object.values(sections).forEach(sec => sec.classList.add("hidden"));
-
-      if (tipo === "cocktails") {
-        fetch("https://script.google.com/macros/s/AKfycbxVTJuhbeuj2oJ1NdH4TQ9Ht0Z_SosWCccUt3psCHMHDFpU5jmFaWR9I7R66qYx475o/exec?acao=atualizarStockCocktails")
-          .then(r => r.text())
-          .then(t => console.log("Stock atualizado:", t))
-          .catch(err => console.error("Erro ao atualizar stock:", err));
       }
     })
-    .catch(() => {
-      mensagem.textContent = "❌ Erro ao enviar.";
-    });
-  });
+    .then(() => {
+  mensagem.textContent = "✅ Enviado com sucesso!";
+  entradaForm.reset();
+  tipoEntrada.value = "";
+  Object.values(sections).forEach(sec => sec.classList.add("hidden"));
 
-  // regista service worker (PWA)
-  if ('serviceWorker' in navigator) {
-    navigator.serviceWorker.register('sw.js').catch(console.error);
+  if (tipo === "cocktails") {
+    setTimeout(() => {
+      fetch("https://script.google.com/macros/s/AKfycbxVTJuhbeuj2oJ1NdH4TQ9HtQZ_SosWCccUt3psCHMHDFpU5jmFaWR9I7R66qYx475o/exec?acao=atualizarStockCocktails")
+        .then(r => r.text())
+        .then(t => console.log("Stock atualizado:", t))
+        .catch(err => console.error("Erro ao atualizar stock:", err));
+    }, 3000); // espera 3 segundos
   }
+})
+.catch(() => {
+  mensagem.textContent = "❌ Erro ao enviar.";
+});
+
+// regista service worker (PWA)
+if ('serviceWorker' in navigator) {
+  navigator.serviceWorker.register('sw.js').catch(console.error);
+}
 </script>
+
