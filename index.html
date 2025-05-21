@@ -201,19 +201,57 @@
         method: "POST",
         body: data
       })
-      .then(r=>r.text())
-      .then(()=>{
-        mensagem.textContent = "✅ Enviado com sucesso!";
-        entradaForm.reset();
-        tipoEntrada.value = "";
-        Object.values(sections).forEach(sec=>sec.classList.add("hidden"));
-      })
-      .catch(()=>{
-        mensagem.textContent = "❌ Erro ao enviar.";
-      });
-    });
+     entradaForm.addEventListener("submit", e => {
+  e.preventDefault();
+  const tipo = tipoEntrada.value;
+  const data = new FormData();
+  data.append("tipoEntrada", tipo);
 
-    // regista service worker (PWA)
+  if (tipo === "novoProduto") {
+    data.append("nomeProduto", nomeProduto.value);
+    data.append("tipoGarrafa", tipoGarrafa.value);
+    data.append("dosesGarrafa", dosesGarrafa.value);
+    data.append("stockMinimo", stockMinimo.value);
+  }
+
+  if (tipo === "cocktails") {
+    data.append("nomeCocktail", nomeCocktail.value);
+    data.append("quantidadeCocktail", quantidadeCocktail.value);
+    data.append("armazemCocktail", armazemCocktail.value);
+    data.append("precoCocktail", precoCocktail.value);
+  }
+
+  if (tipo === "lancamento") {
+    data.append("produtoLancamento", produtoLancamento.value);
+    data.append("quantidadeLancamento", quantidadeLancamento.value);
+    data.append("armazemLancamento", armazemLancamento.value);
+    data.append("tipoLancamento", tipoLancamento.value);
+    data.append("precoLancamento", precoLancamento.value);
+  }
+
+  fetch("https://script.google.com/macros/s/TEU_SCRIPT_ID/exec", {
+    method: "POST",
+    body: data
+  })
+  .then(r => r.text())
+  .then(() => {
+    mensagem.textContent = "✅ Enviado com sucesso!";
+    entradaForm.reset();
+    tipoEntrada.value = "";
+    Object.values(sections).forEach(sec => sec.classList.add("hidden"));
+
+    if (tipo === "cocktails") {
+      fetch("https://script.google.com/macros/s/TEU_SCRIPT_ID/exec?acao=atualizarStockCocktails")
+        .then(r => r.text())
+        .then(t => console.log("Stock atualizado:", t))
+        .catch(err => console.error("Erro ao atualizar stock:", err));
+    }
+  })
+  .catch(() => {
+    mensagem.textContent = "❌ Erro ao enviar.";
+  });
+});
+  // regista service worker (PWA)
     if('serviceWorker' in navigator){
       navigator.serviceWorker.register('sw.js')
         .catch(console.error);
