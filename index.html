@@ -229,7 +229,7 @@
     data.append("precoLancamento", precoLancamento.value);
   }
 
-  fetch("https://script.google.com/macros/s/TEU_SCRIPT_ID/exec", {
+  fetch("https://script.google.com/macros/s/AKfycbxVTJuhbeuj2oJ1NdH4TQ9Ht0Z_SosWCccUt3psCHMHDFpU5jmFaWR9I7R66qYx475o/exec", {
     method: "POST",
     body: data
   })
@@ -241,7 +241,7 @@
     Object.values(sections).forEach(sec => sec.classList.add("hidden"));
 
     if (tipo === "cocktails") {
-      fetch("https://script.google.com/macros/s/TEU_SCRIPT_ID/exec?acao=atualizarStockCocktails")
+      fetch("https://script.google.com/macros/s/AKfycbxVTJuhbeuj2oJ1NdH4TQ9Ht0Z_SosWCccUt3psCHMHDFpU5jmFaWR9I7R66qYx475oD/exec?acao=atualizarStockCocktails")
         .then(r => r.text())
         .then(t => console.log("Stock atualizado:", t))
         .catch(err => console.error("Erro ao atualizar stock:", err));
