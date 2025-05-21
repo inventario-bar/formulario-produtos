@@ -210,17 +210,29 @@
     if (tipo === "cocktails") {
       setTimeout(() => {
         fetch("https://script.google.com/macros/s/AKfycbxVTJuhbeuj2oJ1NdH4TQ9HtQZ_SosWCccUt3psCHMHDFpU5jmFaWR9I7R66qYx475o/exec?acao=atualizarStockCocktails")
-          .then(r => r.text())
-          .then(t => console.log("Stock atualizado:", t))
-          .catch(err => console.error("Erro ao atualizar stock:", err));
-      }, 3000);
-    }
-  })
-  .catch(() => {
-    mensagem.textContent = "❌ Erro ao enviar.";
-  });
-});
+          method: "POST",
+  body: data
+})
+.then(r => r.text())
+.then(() => {
+  mensagem.textContent = "✅ Enviado com sucesso!";
+  entradaForm.reset();
+  tipoEntrada.value = "";
+  Object.values(sections).forEach(sec => sec.classList.add("hidden"));
 
+  // Só aqui dentro entra este bloco:
+  if (tipo === "cocktails") {
+    setTimeout(() => {
+      fetch("https://script.google.com/macros/s/SEU_SCRIPT_ID/exec?acao=atualizarStockCocktails")
+        .then(r => r.text())
+        .then(t => console.log("Stock atualizado:", t))
+        .catch(err => console.error("Erro ao atualizar stock:", err));
+    }, 3000);
+  }
+})
+.catch(() => {
+  mensagem.textContent = "❌ Erro ao enviar.";
+});
 // regista service worker (PWA)
 if ('serviceWorker' in navigator) {
   navigator.serviceWorker.register('sw.js').catch(console.error);
