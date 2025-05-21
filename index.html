@@ -168,67 +168,60 @@
 
   // envia formulário
   entradaForm.addEventListener("submit", e => {
-    e.preventDefault();
-    const tipo = tipoEntrada.value;
-    const data = new FormData();
-    data.append("tipoEntrada", tipo);
+  e.preventDefault();
+  const tipo = tipoEntrada.value;
+  const data = new FormData();
+  data.append("tipoEntrada", tipo);
 
-    if (tipo === "novoProduto") {
-      data.append("nomeProduto", nomeProduto.value);
-      data.append("tipoGarrafa", tipoGarrafa.value);
-      data.append("dosesGarrafa", dosesGarrafa.value);
-      data.append("stockMinimo", stockMinimo.value);
-    }
-
-    if (tipo === "cocktails") {
-      data.append("nomeCocktail", nomeCocktail.value);
-      data.append("quantidadeCocktail", quantidadeCocktail.value);
-      data.append("armazemCocktail", armazemCocktail.value);
-      data.append("precoCocktail", precoCocktail.value);
-    }
-
-    if (tipo === "lancamento") {
-      data.append("produtoLancamento", produtoLancamento.value);
-      data.append("quantidadeLancamento", quantidadeLancamento.value);
-      data.append("armazemLancamento", armazemLancamento.value);
-      data.append("tipoLancamento", tipoLancamento.value);
-      data.append("precoLancamento", precoLancamento.value);
-    }
-
-    fetch("https://script.google.com/macros/s/AKfycbxVTJuhbeuj2oJ1NdH4TQ9Ht0Z_SosWCccUt3psCHMHDFpU5jmFaWR9I7R66qYx475o/exec", {
-      method: "POST",
-      body: data
-    })
-    .then(r => r.text())
-    .then(() => {
-      mensagem.textContent = "✅ Enviado com sucesso!";
-      entradaForm.reset();
-      tipoEntrada.value = "";
-      Object.values(sections).forEach(sec => sec.classList.add("hidden"));
-      }
-    })
-    .then(() => {
-  mensagem.textContent = "✅ Enviado com sucesso!";
-  entradaForm.reset();
-  tipoEntrada.value = "";
-  Object.values(sections).forEach(sec => sec.classList.add("hidden"));
+  if (tipo === "novoProduto") {
+    data.append("nomeProduto", nomeProduto.value);
+    data.append("tipoGarrafa", tipoGarrafa.value);
+    data.append("dosesGarrafa", dosesGarrafa.value);
+    data.append("stockMinimo", stockMinimo.value);
+  }
 
   if (tipo === "cocktails") {
-    setTimeout(() => {
-      fetch("https://script.google.com/macros/s/AKfycbxVTJuhbeuj2oJ1NdH4TQ9HtQZ_SosWCccUt3psCHMHDFpU5jmFaWR9I7R66qYx475o/exec?acao=atualizarStockCocktails")
-        .then(r => r.text())
-        .then(t => console.log("Stock atualizado:", t))
-        .catch(err => console.error("Erro ao atualizar stock:", err));
-    }, 3000); // espera 3 segundos
+    data.append("nomeCocktail", nomeCocktail.value);
+    data.append("quantidadeCocktail", quantidadeCocktail.value);
+    data.append("armazemCocktail", armazemCocktail.value);
+    data.append("precoCocktail", precoCocktail.value);
   }
-})
-.catch(() => {
-  mensagem.textContent = "❌ Erro ao enviar.";
+
+  if (tipo === "lancamento") {
+    data.append("produtoLancamento", produtoLancamento.value);
+    data.append("quantidadeLancamento", quantidadeLancamento.value);
+    data.append("armazemLancamento", armazemLancamento.value);
+    data.append("tipoLancamento", tipoLancamento.value);
+    data.append("precoLancamento", precoLancamento.value);
+  }
+
+  fetch("https://script.google.com/macros/s/AKfycbxVTJuhbeuj2oJ1NdH4TQ9HtQZ_SosWCccUt3psCHMHDFpU5jmFaWR9I7R66qYx475o/exec", {
+    method: "POST",
+    body: data
+  })
+  .then(r => r.text())
+  .then(() => {
+    mensagem.textContent = "✅ Enviado com sucesso!";
+    entradaForm.reset();
+    tipoEntrada.value = "";
+    Object.values(sections).forEach(sec => sec.classList.add("hidden"));
+
+    // Espera 3 segundos antes de atualizar stock (apenas se for cocktails)
+    if (tipo === "cocktails") {
+      setTimeout(() => {
+        fetch("https://script.google.com/macros/s/AKfycbxVTJuhbeuj2oJ1NdH4TQ9HtQZ_SosWCccUt3psCHMHDFpU5jmFaWR9I7R66qYx475o/exec?acao=atualizarStockCocktails")
+          .then(r => r.text())
+          .then(t => console.log("Stock atualizado:", t))
+          .catch(err => console.error("Erro ao atualizar stock:", err));
+      }, 3000);
+    }
+  })
+  .catch(() => {
+    mensagem.textContent = "❌ Erro ao enviar.";
+  });
 });
 
 // regista service worker (PWA)
 if ('serviceWorker' in navigator) {
   navigator.serviceWorker.register('sw.js').catch(console.error);
 }
-</script>
-
