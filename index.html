@@ -10,7 +10,6 @@
 </head>
 <body class="bg-gray-100 min-h-screen py-10 px-4">
 
-  <!-- Link de volta -->
   <a href="https://inventario-bar.github.io/formulario-produtos/"
      class="inline-flex items-center text-blue-600 hover:text-blue-800 font-medium mb-4">
     ← Voltar à página inicial
@@ -113,112 +112,68 @@
             class="w-full bg-green-600 text-white py-3 rounded-lg hover:bg-green-700 transition">
       Enviar
     </button>
+    <button type="button" id="btnAtualizarCocktails"
+            class="hidden w-full bg-blue-600 text-white py-3 rounded-lg hover:bg-blue-700 transition">
+      🔄 Atualizar Stock de Cocktails
+    </button>
     <p id="mensagem" class="text-center text-sm text-gray-600"></p>
   </form>
 
   <script>
-    // referencia dos selects e seções
     const tipoEntrada = document.getElementById("tipoEntrada");
+    const btnAtualizarCocktails = document.getElementById("btnAtualizarCocktails");
+    const entradaForm = document.getElementById("entradaForm");
+    const mensagem = document.getElementById("mensagem");
+
     const sections = {
       novoProduto: document.getElementById("novoProdutoFields"),
       cocktails: document.getElementById("cocktailsFields"),
       lancamento: document.getElementById("lancamentoFields")
     };
-    // campos do formulário
-    const nomeProduto         = document.getElementById("nomeProduto");
-    const tipoGarrafa         = document.getElementById("tipoGarrafa");
-    const dosesGarrafa        = document.getElementById("dosesGarrafa");
-    const stockMinimo         = document.getElementById("stockMinimo");
-    const nomeCocktail        = document.getElementById("nomeCocktail");
-    const quantidadeCocktail  = document.getElementById("quantidadeCocktail");
-    const armazemCocktail     = document.getElementById("armazemCocktail");
-    const precoCocktail       = document.getElementById("precoCocktail");
-    const produtoLancamento   = document.getElementById("produtoLancamento");
-    const quantidadeLancamento= document.getElementById("quantidadeLancamento");
-    const armazemLancamento   = document.getElementById("armazemLancamento");
-    const tipoLancamento      = document.getElementById("tipoLancamento");
-    const precoLancamento     = document.getElementById("precoLancamento");
-    const mensagem            = document.getElementById("mensagem");
-    const entradaForm         = document.getElementById("entradaForm");
 
-    // mostra/esconde seções
-    tipoEntrada.addEventListener("change", ()=> {
-      Object.values(sections).forEach(sec=>sec.classList.add("hidden"));
-      if(sections[tipoEntrada.value]) sections[tipoEntrada.value].classList.remove("hidden");
+    tipoEntrada.addEventListener("change", () => {
+      Object.values(sections).forEach(sec => sec.classList.add("hidden"));
+      btnAtualizarCocktails.classList.add("hidden");
+      if (sections[tipoEntrada.value]) {
+        sections[tipoEntrada.value].classList.remove("hidden");
+        if (tipoEntrada.value === "cocktails") {
+          btnAtualizarCocktails.classList.remove("hidden");
+        }
+      }
     });
 
-    // popula dropdowns estáticos e via JSON
-    function preencherSelect(id, dados, placeholder){
-      const sel = document.getElementById(id);
-      sel.innerHTML = `<option value="">${placeholder}</option>`;
-      dados.forEach(item=>{
-        const o = document.createElement("option");
-        o.value = item; o.textContent = item;
-        sel.appendChild(o);
-      });
-    }
-    fetch("produtos.json")
-      .then(r=>r.json())
-      .then(d=>preencherSelect("produtoLancamento", d, "Seleciona um produto"));
-    fetch("cocktails.json")
-      .then(r=>r.json())
-      .then(d=>preencherSelect("nomeCocktail", d, "Seleciona um cocktail"));
-    fetch("garrafas.json")
-      .then(r=>r.json())
-      .then(d=>preencherSelect("tipoGarrafa", d, "Seleciona o tipo de garrafa"));
-    preencherSelect("armazemCocktail",   ["ARMAZÉM 1","ARMAZÉM 2 E OFERTAS"], "Seleciona um armazém");
-    preencherSelect("armazemLancamento", ["ARMAZÉM 1","ARMAZÉM 2 E OFERTAS"], "Seleciona um armazém");
-
-    // dispara webhook
-    entradaForm.addEventListener("submit", e=>{
+    entradaForm.addEventListener("submit", e => {
       e.preventDefault();
       const tipo = tipoEntrada.value;
-      const data = new FormData();
-      data.append("tipoEntrada", tipo);
+      const data = new FormData(entradaForm);
 
-      if(tipo==="novoProduto"){
-        data.append("nomeProduto", nomeProduto.value);
-        data.append("tipoGarrafa", tipoGarrafa.value);
-        data.append("dosesGarrafa", dosesGarrafa.value);
-        data.append("stockMinimo", stockMinimo.value);
-      }
-      if(tipo==="cocktails"){
-        data.append("nomeCocktail", nomeCocktail.value);
-        data.append("quantidadeCocktail", quantidadeCocktail.value);
-        data.append("armazemCocktail", armazemCocktail.value);
-        data.append("precoCocktail", precoCocktail.value);
-      }
-      if(tipo==="lancamento"){
-        data.append("produtoLancamento", produtoLancamento.value);
-        data.append("quantidadeLancamento", quantidadeLancamento.value);
-        data.append("armazemLancamento", armazemLancamento.value);
-        data.append("tipoLancamento", tipoLancamento.value);
-        data.append("precoLancamento", precoLancamento.value);
-      }
-
-      // ** Atenção **: aqui é que vai a tua URL de webhook
       fetch("https://script.google.com/macros/s/AKfycbxVTJuhbeuj2oJ1NdH4TQ9Ht0Z_SosWCccUt3psCHMHDFpU5jmFaWR9I7R66qYx475o/exec", {
         method: "POST",
         body: data
       })
-      .then(r=>r.text())
-      .then(()=>{
+      .then(r => r.text())
+      .then(() => {
         mensagem.textContent = "✅ Enviado com sucesso!";
         entradaForm.reset();
         tipoEntrada.value = "";
-        Object.values(sections).forEach(sec=>sec.classList.add("hidden"));
+        Object.values(sections).forEach(sec => sec.classList.add("hidden"));
+        btnAtualizarCocktails.classList.add("hidden");
       })
-      .catch(()=>{
+      .catch(() => {
         mensagem.textContent = "❌ Erro ao enviar.";
       });
     });
 
-    // regista service worker (PWA)
+    btnAtualizarCocktails.addEventListener("click", () => {
+      fetch("https://script.google.com/macros/s/AKfycbxVTJuhbeuj2oJ1NdH4TQ9Ht0Z_SosWCccUt3psCHMHDFpU5jmFaWR9I7R66qYx475o/exec?acao=atualizarStockCocktails")
+        .then(r => r.text())
+        .then(() => alert("\u2705 Stock atualizado com sucesso!"))
+        .catch(err => alert("\u274c Erro ao atualizar stock: " + err));
+    });
+
     if('serviceWorker' in navigator){
-      navigator.serviceWorker.register('sw.js')
-        .catch(console.error);
+      navigator.serviceWorker.register('sw.js').catch(console.error);
     }
   </script>
 </body>
 </html>
-
