@@ -213,71 +213,12 @@
       });
     });
 
-        <!-- Botão para atualizar stock (só visível em "Cocktails") -->
-    <button type="button" id="btnAtualizarCocktails"
-            class="hidden w-full bg-blue-600 text-white py-3 rounded-lg hover:bg-blue-700 transition">
-      🔄 Atualizar Stock de Cocktails
-    </button>
-  </form>
-
-  <script>
     // regista service worker (PWA)
-    if ('serviceWorker' in navigator) {
-      navigator.serviceWorker.register('sw.js').catch(console.error);
+    if('serviceWorker' in navigator){
+      navigator.serviceWorker.register('sw.js')
+        .catch(console.error);
     }
-
-    // mostra botão se tipo for cocktails
-    const btnAtualizarCocktails = document.getElementById("btnAtualizarCocktails");
-
-    tipoEntrada.addEventListener("change", () => {
-      Object.values(sections).forEach(sec => sec.classList.add("hidden"));
-      btnAtualizarCocktails.classList.add("hidden");
-
-      if (sections[tipoEntrada.value]) {
-        sections[tipoEntrada.value].classList.remove("hidden");
-
-        if (tipoEntrada.value === "cocktails") {
-          btnAtualizarCocktails.classList.remove("hidden");
-        }
-      }
-    });
-
-    Botão para atualizar stock (só visível em "Cocktails") -->
-    <button type="button" id="btnAtualizarCocktails"
-            class="hidden w-full bg-blue-600 text-white py-3 rounded-lg hover:bg-blue-700 transition">
-      🔄 Atualizar Stock de Cocktails
-    </button>
-  </form>
-
-  <script>
-    // regista service worker (PWA)
-    if ('serviceWorker' in navigator) {
-      navigator.serviceWorker.register('sw.js').catch(console.error);
-    }
-
-    // mostra botão se tipo for cocktails
-    const btnAtualizarCocktails = document.getElementById("btnAtualizarCocktails");
-
-    tipoEntrada.addEventListener("change", () => {
-      Object.values(sections).forEach(sec => sec.classList.add("hidden"));
-      btnAtualizarCocktails.classList.add("hidden");
-
-      if (sections[tipoEntrada.value]) {
-        sections[tipoEntrada.value].classList.remove("hidden");
-
-        if (tipoEntrada.value === "cocktails") {
-          btnAtualizarCocktails.classList.remove("hidden");
-        }
-      }
-    });
-
-    // ação do botão atualizar
-    btnAtualizarCocktails.addEventListener("click", () => {
-      fetch("https://script.google.com/macros/s/AKfycbxVTJuhbeuj2oJ1NdH4TQ9Ht0Z_SosWCccUt3psCHMHDFpU5jmFaWR9I7R66qYx475o/exec?acao=atualizarStockCocktails")
-        .then(r => r.text())
-        .then(() => alert("✅ Stock atualizado com sucesso!"))
-        .catch(err => alert("❌ Erro ao atualizar stock: " + err));
-    });
   </script>
 </body>
 </html>
+
