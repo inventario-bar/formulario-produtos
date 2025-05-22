@@ -138,26 +138,31 @@
     });
 
     entradaForm.addEventListener("submit", e => {
-      e.preventDefault();
-      const tipo = tipoEntrada.value;
-      const data = new FormData(entradaForm);
+  e.preventDefault();
+  // Serializa como x-www-form-urlencoded
+  const payload = new URLSearchParams(new FormData(entradaForm)).toString();
 
-      fetch("https://script.google.com/macros/s/AKfycbxVTJuhbeuj2oJ1NdH4TQ9Ht0Z_SosWCccUt3psCHMHDFpU5jmFaWR9I7R66qYx475o/exec", {
-        method: "POST",
-        body: data
-      })
-      .then(r => r.text())
-      .then(() => {
-        mensagem.textContent = "✅ Enviado com sucesso!";
-        entradaForm.reset();
-        tipoEntrada.value = "";
-        Object.values(sections).forEach(sec => sec.classList.add("hidden"));
-        btnAtualizarCocktails.classList.add("hidden");
-      })
-      .catch(() => {
-        mensagem.textContent = "❌ Erro ao enviar.";
-      });
-    });
+  fetch("https://script.google.com/macros/s/AKfycbxVTJuhbeuj2oJ1NdH4TQ9Ht0Z_SosWCccUt3psCHMHDFpU5jmFaWR9I7R66qYx475o/exec", {
+    method: "POST",
+    headers: { 'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8' },
+    body: payload
+  })
+  .then(r => r.text())
+  .then(text => {
+    // Exibe a resposta do GAS (✅ ou ❌)
+    mensagem.textContent = text;
+    if (text.startsWith("✅")) {
+      entradaForm.reset();
+      tipoEntrada.value = "";
+      Object.values(sections).forEach(sec => sec.classList.add("hidden"));
+      btnAtualizarCocktails.classList.add("hidden");
+    }
+  })
+  .catch(err => {
+    mensagem.textContent = "❌ Erro ao enviar: " + err;
+  });
+});
+
 
     btnAtualizarCocktails.addEventListener("click", () => {
       fetch("https://script.google.com/macros/s/AKfycbxVTJuhbeuj2oJ1NdH4TQ9Ht0Z_SosWCccUt3psCHMHDFpU5jmFaWR9I7R66qYx475o/exec?acao=atualizarStockCocktails")
