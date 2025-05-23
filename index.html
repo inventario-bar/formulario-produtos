@@ -116,98 +116,89 @@
   </form>
 
   <script>
-    const tipoEntrada = document.getElementById("tipoEntrada");
-    const btnAtualizarCocktails = document.getElementById("btnAtualizarCocktails");
-    const entradaForm = document.getElementById("entradaForm");
-    const mensagem = document.getElementById("mensagem");
-    const sections = {
-      novoProduto: document.getElementById("novoProdutoFields"),
-      cocktails: document.getElementById("cocktailsFields"),
-      lancamento: document.getElementById("lancamentoFields")
-    };
+    document.addEventListener("DOMContentLoaded", () => {
+      const tipoEntrada = document.getElementById("tipoEntrada");
+      const btnAtualizarCocktails = document.getElementById("btnAtualizarCocktails");
+      const entradaForm = document.getElementById("entradaForm");
+      const mensagem = document.getElementById("mensagem");
+      const sections = {
+        novoProduto: document.getElementById("novoProdutoFields"),
+        cocktails: document.getElementById("cocktailsFields"),
+        lancamento: document.getElementById("lancamentoFields")
+      };
 
-    <script>
-document.addEventListener("DOMContentLoaded", () => {
-  const tipoEntrada = document.getElementById("tipoEntrada");
-  const btnAtualizarCocktails = document.getElementById("btnAtualizarCocktails");
-  const entradaForm = document.getElementById("entradaForm");
-  const mensagem = document.getElementById("mensagem");
-  const sections = {
-    novoProduto: document.getElementById("novoProdutoFields"),
-    cocktails: document.getElementById("cocktailsFields"),
-    lancamento: document.getElementById("lancamentoFields")
-  };
-
-  tipoEntrada.addEventListener("change", () => {
-    Object.values(sections).forEach(sec => sec.classList.add("hidden"));
-    btnAtualizarCocktails.classList.add("hidden");
-    if (sections[tipoEntrada.value]) {
-      sections[tipoEntrada.value].classList.remove("hidden");
-      if (tipoEntrada.value === "cocktails") {
-        btnAtualizarCocktails.classList.remove("hidden");
-      }
-    }
-  });
-
-  entradaForm.addEventListener("submit", e => {
-    e.preventDefault();
-    const payload = new URLSearchParams(new FormData(entradaForm)).toString();
-    fetch("https://script.google.com/macros/s/AKfycbxVTJuhbeuj2oJ1NdH4TQ9Ht0Z_SosWCccUt3psCHMHDFpU5jmFaWR9I7R66qYx475o/exec", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/x-www-form-urlencoded; charset=UTF-8"
-      },
-      body: payload
-    })
-    .then(r => r.text())
-    .then(text => {
-      mensagem.textContent = text;
-      if (text.startsWith("✅")) {
-        entradaForm.reset();
-        tipoEntrada.value = "";
+      tipoEntrada.addEventListener("change", () => {
         Object.values(sections).forEach(sec => sec.classList.add("hidden"));
         btnAtualizarCocktails.classList.add("hidden");
+        if (sections[tipoEntrada.value]) {
+          sections[tipoEntrada.value].classList.remove("hidden");
+          if (tipoEntrada.value === "cocktails") {
+            btnAtualizarCocktails.classList.remove("hidden");
+          }
+        }
+      });
+
+      entradaForm.addEventListener("submit", e => {
+        e.preventDefault();
+        const payload = new URLSearchParams(new FormData(entradaForm)).toString();
+        fetch("https://script.google.com/macros/s/AKfycbxVTJuhbeuj2oJ1NdH4TQ9Ht0Z_SosWCccUt3psCHMHDFpU5jmFaWR9I7R66qYx475o/exec", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/x-www-form-urlencoded; charset=UTF-8"
+          },
+          body: payload
+        })
+        .then(r => r.text())
+        .then(text => {
+          mensagem.textContent = text;
+          if (text.startsWith("✅")) {
+            entradaForm.reset();
+            tipoEntrada.value = "";
+            Object.values(sections).forEach(sec => sec.classList.add("hidden"));
+            btnAtualizarCocktails.classList.add("hidden");
+          }
+        })
+        .catch(err => {
+          mensagem.textContent = "❌ Erro ao enviar: " + err;
+        });
+      });
+
+      btnAtualizarCocktails.addEventListener("click", () => {
+        fetch("https://script.google.com/macros/s/AKfycbxVTJuhbeuj2oJ1NdH4TQ9Ht0Z_SosWCccUt3psCHMHDFpU5jmFaWR9I7R66qYx475o/exec?acao=atualizarStockCocktails")
+          .then(r => r.text())
+          .then(text => alert(text))
+          .catch(err => alert("❌ Erro ao atualizar stock: " + err));
+      });
+
+      fetch("produtos.json")
+        .then(r => r.json())
+        .then(d => preencherSelect("produtoLancamento", d, "Seleciona um produto"));
+      fetch("cocktails.json")
+        .then(r => r.json())
+        .then(d => preencherSelect("nomeCocktail", d, "Seleciona um cocktail"));
+      fetch("garrafas.json")
+        .then(r => r.json())
+        .then(d => preencherSelect("tipoGarrafa", d, "Seleciona o tipo de garrafa"));
+
+      function preencherSelect(id, dados, placeholder) {
+        const sel = document.getElementById(id);
+        sel.innerHTML = `<option value="">${placeholder}</option>`;
+        dados.forEach(item => {
+          const o = document.createElement("option");
+          o.value = item;
+          o.textContent = item;
+          sel.appendChild(o);
+        });
       }
-    })
-    .catch(err => {
-      mensagem.textContent = "❌ Erro ao enviar: " + err;
+
+      preencherSelect("armazemCocktail", ["ARMAZÉM 1", "ARMAZÉM 2 E OFERTAS"], "Seleciona um armazém");
+      preencherSelect("armazemLancamento", ["ARMAZÉM 1", "ARMAZÉM 2 E OFERTAS"], "Seleciona um armazém");
+
+      if ('serviceWorker' in navigator) {
+        navigator.serviceWorker.register('sw.js').catch(console.error);
+      }
     });
-  });
+  </script>
+</body>
+</html>
 
-  btnAtualizarCocktails.addEventListener("click", () => {
-    fetch("https://script.google.com/macros/s/AKfycbxVTJuhbeuj2oJ1NdH4TQ9Ht0Z_SosWCccUt3psCHMHDFpU5jmFaWR9I7R66qYx475o/exec?acao=atualizarStockCocktails")
-      .then(r => r.text())
-      .then(text => alert(text))
-      .catch(err => alert("❌ Erro ao atualizar stock: " + err));
-  });
-
-  // preencher os dropdowns
-  fetch("produtos.json")
-    .then(r => r.json())
-    .then(d => preencherSelect("produtoLancamento", d, "Seleciona um produto"));
-  fetch("cocktails.json")
-    .then(r => r.json())
-    .then(d => preencherSelect("nomeCocktail", d, "Seleciona um cocktail"));
-  fetch("garrafas.json")
-    .then(r => r.json())
-    .then(d => preencherSelect("tipoGarrafa", d, "Seleciona o tipo de garrafa"));
-
-  function preencherSelect(id, dados, placeholder) {
-    const sel = document.getElementById(id);
-    sel.innerHTML = `<option value="">${placeholder}</option>`;
-    dados.forEach(item => {
-      const o = document.createElement("option");
-      o.value = item;
-      o.textContent = item;
-      sel.appendChild(o);
-    });
-  }
-
-  preencherSelect("armazemCocktail", ["ARMAZÉM 1", "ARMAZÉM 2 E OFERTAS"], "Seleciona um armazém");
-  preencherSelect("armazemLancamento", ["ARMAZÉM 1", "ARMAZÉM 2 E OFERTAS"], "Seleciona um armazém");
-
-  if ('serviceWorker' in navigator) {
-    navigator.serviceWorker.register('sw.js').catch(console.error);
-  }
-});
-</script>
