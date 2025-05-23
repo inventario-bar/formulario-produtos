@@ -139,13 +139,7 @@
 
     entradaForm.addEventListener("submit", e => {
   e.preventDefault();
-  // Serializa como x-www-form-urlencoded
-  const payload = new URLSearchParams(new FormData(entradaForm)).toString();
 
-  entradaForm.addEventListener("submit", e => {
-  e.preventDefault();
-
-  // 🔄 Converte os dados do formulário para o formato correto (x-www-form-urlencoded)
   const payload = new URLSearchParams(new FormData(entradaForm)).toString();
 
   fetch("https://script.google.com/macros/s/AKfycbxVTJuhbeuj2oJ1NdH4TQ9Ht0Z_SosWCccUt3psCHMHDFpU5jmFaWR9I7R66qYx475o/exec", {
@@ -157,10 +151,10 @@
   })
   .then(r => r.text())
   .then(text => {
-    mensagem.textContent = text; // mostra a resposta do script GAS
+    mensagem.textContent = text;
 
     if (text.startsWith("✅")) {
-      entradaForm.reset(); // limpa o formulário só se der certo
+      entradaForm.reset();
       tipoEntrada.value = "";
       Object.values(sections).forEach(sec => sec.classList.add("hidden"));
       btnAtualizarCocktails.classList.add("hidden");
