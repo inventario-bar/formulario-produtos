@@ -142,17 +142,25 @@
   // Serializa como x-www-form-urlencoded
   const payload = new URLSearchParams(new FormData(entradaForm)).toString();
 
+  entradaForm.addEventListener("submit", e => {
+  e.preventDefault();
+
+  // 🔄 Converte os dados do formulário para o formato correto (x-www-form-urlencoded)
+  const payload = new URLSearchParams(new FormData(entradaForm)).toString();
+
   fetch("https://script.google.com/macros/s/AKfycbxVTJuhbeuj2oJ1NdH4TQ9Ht0Z_SosWCccUt3psCHMHDFpU5jmFaWR9I7R66qYx475o/exec", {
     method: "POST",
-    headers: { 'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8' },
+    headers: {
+      "Content-Type": "application/x-www-form-urlencoded; charset=UTF-8"
+    },
     body: payload
   })
   .then(r => r.text())
   .then(text => {
-    // Exibe a resposta do GAS (✅ ou ❌)
-    mensagem.textContent = text;
+    mensagem.textContent = text; // mostra a resposta do script GAS
+
     if (text.startsWith("✅")) {
-      entradaForm.reset();
+      entradaForm.reset(); // limpa o formulário só se der certo
       tipoEntrada.value = "";
       Object.values(sections).forEach(sec => sec.classList.add("hidden"));
       btnAtualizarCocktails.classList.add("hidden");
@@ -162,6 +170,7 @@
     mensagem.textContent = "❌ Erro ao enviar: " + err;
   });
 });
+
 
 
    btnAtualizarCocktails.addEventListener("click", () => {
