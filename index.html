@@ -133,25 +133,25 @@
         e.preventDefault();
         const payload = new URLSearchParams(new FormData(entradaForm)).toString();
         fetch("https://script.google.com/macros/s/AKfycbx-nRW8TLO8pf5P1PJTtmUJZnx-vsDENjIhL0ut7Sz7usYRzSfySEiMUSXQQ1nVWk1w/exec", {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/x-www-form-urlencoded; charset=UTF-8"
-          },
-          body: payload
-        })
-        .then(r => r.text())
-        .then(text => {
-          mensagem.textContent = text;
-          if (text.startsWith("✅")) {
-            entradaForm.reset();
-            tipoEntrada.value = "";
-            Object.values(sections).forEach(sec => sec.classList.add("hidden"));
-          }
-        })
-        .catch(err => {
-          mensagem.textContent = "❌ Erro ao enviar: " + err;
-        });
-      });
+  method: "POST",
+  headers: {
+    "Content-Type": "application/x-www-form-urlencoded; charset=UTF-8"
+  },
+  body: payload
+})
+.then(r => r.json())
+.then(resposta => {
+  mensagem.textContent = resposta.message;
+  if (resposta.status === "success") {
+    entradaForm.reset();
+    tipoEntrada.value = "";
+    Object.values(sections).forEach(sec => sec.classList.add("hidden"));
+  }
+})
+.catch(err => {
+  mensagem.textContent = "❌ Erro ao enviar: " + err;
+});
+
 
       fetch("produtos.json")
         .then(r => r.json())
