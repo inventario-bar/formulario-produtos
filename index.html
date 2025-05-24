@@ -141,7 +141,7 @@
       entradaForm.addEventListener("submit", e => {
         e.preventDefault();
         const payload = new URLSearchParams(new FormData(entradaForm)).toString();
-        fetch("https://script.google.com/macros/s/AKfycbxVTJuhbeuj2oJ1NdH4TQ9Ht0Z_SosWCccUt3psCHMHDFpU5jmFaWR9I7R66qYx475o/exec", {
+        fetch("https://script.google.com/macros/s/AKfycbx-nRW8TLO8pf5P1PJTtmUJZnx-vsDENjIhL0ut7Sz7usYRzSfySEiMUSXQQ1nVWk1w/exec", {
           method: "POST",
           headers: {
             "Content-Type": "application/x-www-form-urlencoded; charset=UTF-8"
@@ -164,7 +164,7 @@
       });
 
       btnAtualizarCocktails.addEventListener("click", () => {
-        fetch("https://script.google.com/macros/s/AKfycbxVTJuhbeuj2oJ1NdH4TQ9Ht0Z_SosWCccUt3psCHMHDFpU5jmFaWR9I7R66qYx475o/exec?acao=atualizarStockCocktails")
+        fetch("https://script.google.com/macros/s/AKfycbx-nRW8TLO8pf5P1PJTtmUJZnx-vsDENjIhL0ut7Sz7usYRzSfySEiMUSXQQ1nVWk1w/exec?acao=atualizarStockCocktails")
           .then(r => r.text())
           .then(text => alert(text))
           .catch(err => alert("❌ Erro ao atualizar stock: " + err));
