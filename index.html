@@ -155,19 +155,11 @@
             entradaForm.reset();
             tipoEntrada.value = "";
             Object.values(sections).forEach(sec => sec.classList.add("hidden"));
-            btnAtualizarCocktails.classList.add("hidden");
           }
         })
         .catch(err => {
           mensagem.textContent = "❌ Erro ao enviar: " + err;
         });
-      });
-
-      btnAtualizarCocktails.addEventListener("click", () => {
-        fetch("https://script.google.com/macros/s/AKfycbx-nRW8TLO8pf5P1PJTtmUJZnx-vsDENjIhL0ut7Sz7usYRzSfySEiMUSXQQ1nVWk1w/exec?acao=atualizarStockCocktails")
-          .then(r => r.text())
-          .then(text => alert(text))
-          .catch(err => alert("❌ Erro ao atualizar stock: " + err));
       });
 
       fetch("produtos.json")
