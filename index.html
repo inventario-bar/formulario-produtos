@@ -114,7 +114,6 @@
   <script>
     document.addEventListener("DOMContentLoaded", () => {
       const tipoEntrada = document.getElementById("tipoEntrada");
-      const btnAtualizarCocktails = document.getElementById("btnAtualizarCocktails");
       const entradaForm = document.getElementById("entradaForm");
       const mensagem = document.getElementById("mensagem");
       const sections = {
@@ -125,12 +124,8 @@
 
       tipoEntrada.addEventListener("change", () => {
         Object.values(sections).forEach(sec => sec.classList.add("hidden"));
-        btnAtualizarCocktails.classList.add("hidden");
         if (sections[tipoEntrada.value]) {
           sections[tipoEntrada.value].classList.remove("hidden");
-          if (tipoEntrada.value === "cocktails") {
-            btnAtualizarCocktails.classList.remove("hidden");
-          }
         }
       });
 
@@ -189,4 +184,3 @@
   </script>
 </body>
 </html>
-
