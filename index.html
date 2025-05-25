@@ -197,7 +197,229 @@
       }
 
       // ** Atenção **: aqui é que vai a tua URL de webhook
+      fetch("<!DOCTYPE html>
+<html lang="pt">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Formulário de Produtos</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="manifest" href="manifest.json">
+  <meta name="theme-color" content="#28a745">
+</head>
+<body class="bg-gray-100 min-h-screen py-10 px-4">
+
+  <!-- Link de volta -->
+  <a href="https://inventario-bar.github.io/formulario-produtos/"
+     class="inline-flex items-center text-blue-600 hover:text-blue-800 font-medium mb-4">
+    ← Voltar à página inicial
+  </a>
+
+  <form id="entradaForm" class="bg-white shadow-md rounded-xl max-w-2xl mx-auto p-6 space-y-6">
+    <h2 class="text-2xl font-bold text-center text-gray-800">Entrada de Produtos</h2>
+
+    <div>
+      <label for="tipoEntrada" class="block font-medium text-gray-700">Tipo de Entrada</label>
+      <select id="tipoEntrada" name="tipoEntrada" required
+              class="mt-1 block w-full rounded-md border-gray-300 shadow-sm p-2">
+        <option value="">-- Selecione --</option>
+        <option value="novoProduto">Novo Produto</option>
+        <option value="cocktails">Cocktails</option>
+        <option value="lancamento">Lançamento</option>
+      </select>
+    </div>
+
+    <!-- Novo Produto -->
+    <div class="form-section hidden border-t pt-4" id="novoProdutoFields">
+      <h3 class="text-lg font-semibold text-gray-700 mb-2">Novo Produto</h3>
+      <div class="space-y-4">
+        <label class="block">Nome do Produto
+          <input type="text" id="nomeProduto" name="nomeProduto"
+                 class="p-2 w-full rounded-md border border-gray-300">
+        </label>
+        <label class="block">Tipo de Garrafa
+          <select id="tipoGarrafa" name="tipoGarrafa"
+                  class="p-2 w-full rounded-md border border-gray-300"></select>
+        </label>
+        <label class="block">Nº Doses por Garrafa
+          <input type="number" id="dosesGarrafa" name="dosesGarrafa"
+                 class="p-2 w-full rounded-md border border-gray-300">
+        </label>
+        <label class="block">Stock Mínimo
+          <input type="number" id="stockMinimo" name="stockMinimo"
+                 class="p-2 w-full rounded-md border border-gray-300">
+        </label>
+      </div>
+    </div>
+
+    <!-- Cocktails -->
+    <div class="form-section hidden border-t pt-4" id="cocktailsFields">
+      <h3 class="text-lg font-semibold text-gray-700 mb-2">Cocktails</h3>
+      <div class="space-y-4">
+        <label class="block">Nome do Cocktail
+          <select id="nomeCocktail" name="nomeCocktail"
+                  class="p-2 w-full rounded-md border border-gray-300"></select>
+        </label>
+        <label class="block">Quantidade
+          <input type="number" id="quantidadeCocktail" name="quantidadeCocktail"
+                 class="p-2 w-full rounded-md border border-gray-300">
+        </label>
+        <label class="block">Armazém
+          <select id="armazemCocktail" name="armazemCocktail"
+                  class="p-2 w-full rounded-md border border-gray-300"></select>
+        </label>
+        <label class="block">Preço
+          <input type="number" step="0.01" id="precoCocktail" name="precoCocktail"
+                 class="p-2 w-full rounded-md border border-gray-300">
+        </label>
+      </div>
+    </div>
+
+    <!-- Lançamento -->
+    <div class="form-section hidden border-t pt-4" id="lancamentoFields">
+      <h3 class="text-lg font-semibold text-gray-700 mb-2">Lançamento</h3>
+      <div class="space-y-4">
+        <label class="block">Produto
+          <select id="produtoLancamento" name="produtoLancamento"
+                  class="p-2 w-full rounded-md border border-gray-300"></select>
+        </label>
+        <label class="block">Quantidade
+          <input type="number" id="quantidadeLancamento" name="quantidadeLancamento"
+                 class="p-2 w-full rounded-md border border-gray-300">
+        </label>
+        <label class="block">Armazém
+          <select id="armazemLancamento" name="armazemLancamento"
+                  class="p-2 w-full rounded-md border border-gray-300"></select>
+        </label>
+        <label class="block">Tipo de Lançamento
+          <select id="tipoLancamento" name="tipoLancamento"
+                  class="p-2 w-full rounded-md border border-gray-300">
+            <option value="">Seleciona um tipo</option>
+            <option value="COMPRA">COMPRA</option>
+            <option value="VENDA">VENDA</option>
+            <option value="OFERTA">OFERTA</option>
+            <option value="INVENTARIO">INVENTARIO</option>
+          </select>
+        </label>
+        <label class="block">Preço
+          <input type="number" step="0.01" id="precoLancamento" name="precoLancamento"
+                 class="p-2 w-full rounded-md border border-gray-300">
+        </label>
+      </div>
+    </div>
+
+    <button type="submit"
+            class="w-full bg-green-600 text-white py-3 rounded-lg hover:bg-green-700 transition">
+      Enviar
+    </button>
+    <p id="mensagem" class="text-center text-sm text-gray-600"></p>
+  </form>
+
+  <script>
+    // referencia dos selects e seções
+    const tipoEntrada = document.getElementById("tipoEntrada");
+    const sections = {
+      novoProduto: document.getElementById("novoProdutoFields"),
+      cocktails: document.getElementById("cocktailsFields"),
+      lancamento: document.getElementById("lancamentoFields")
+    };
+    // campos do formulário
+    const nomeProduto         = document.getElementById("nomeProduto");
+    const tipoGarrafa         = document.getElementById("tipoGarrafa");
+    const dosesGarrafa        = document.getElementById("dosesGarrafa");
+    const stockMinimo         = document.getElementById("stockMinimo");
+    const nomeCocktail        = document.getElementById("nomeCocktail");
+    const quantidadeCocktail  = document.getElementById("quantidadeCocktail");
+    const armazemCocktail     = document.getElementById("armazemCocktail");
+    const precoCocktail       = document.getElementById("precoCocktail");
+    const produtoLancamento   = document.getElementById("produtoLancamento");
+    const quantidadeLancamento= document.getElementById("quantidadeLancamento");
+    const armazemLancamento   = document.getElementById("armazemLancamento");
+    const tipoLancamento      = document.getElementById("tipoLancamento");
+    const precoLancamento     = document.getElementById("precoLancamento");
+    const mensagem            = document.getElementById("mensagem");
+    const entradaForm         = document.getElementById("entradaForm");
+
+    // mostra/esconde seções
+    tipoEntrada.addEventListener("change", ()=> {
+      Object.values(sections).forEach(sec=>sec.classList.add("hidden"));
+      if(sections[tipoEntrada.value]) sections[tipoEntrada.value].classList.remove("hidden");
+    });
+
+    // popula dropdowns estáticos e via JSON
+    function preencherSelect(id, dados, placeholder){
+      const sel = document.getElementById(id);
+      sel.innerHTML = `<option value="">${placeholder}</option>`;
+      dados.forEach(item=>{
+        const o = document.createElement("option");
+        o.value = item; o.textContent = item;
+        sel.appendChild(o);
+      });
+    }
+    fetch("produtos.json")
+      .then(r=>r.json())
+      .then(d=>preencherSelect("produtoLancamento", d, "Seleciona um produto"));
+    fetch("cocktails.json")
+      .then(r=>r.json())
+      .then(d=>preencherSelect("nomeCocktail", d, "Seleciona um cocktail"));
+    fetch("garrafas.json")
+      .then(r=>r.json())
+      .then(d=>preencherSelect("tipoGarrafa", d, "Seleciona o tipo de garrafa"));
+    preencherSelect("armazemCocktail",   ["ARMAZÉM 1","ARMAZÉM 2 E OFERTAS"], "Seleciona um armazém");
+    preencherSelect("armazemLancamento", ["ARMAZÉM 1","ARMAZÉM 2 E OFERTAS"], "Seleciona um armazém");
+
+    // dispara webhook
+    entradaForm.addEventListener("submit", e=>{
+      e.preventDefault();
+      const tipo = tipoEntrada.value;
+      const data = new FormData();
+      data.append("tipoEntrada", tipo);
+
+      if(tipo==="novoProduto"){
+        data.append("nomeProduto", nomeProduto.value);
+        data.append("tipoGarrafa", tipoGarrafa.value);
+        data.append("dosesGarrafa", dosesGarrafa.value);
+        data.append("stockMinimo", stockMinimo.value);
+      }
+      if(tipo==="cocktails"){
+        data.append("nomeCocktail", nomeCocktail.value);
+        data.append("quantidadeCocktail", quantidadeCocktail.value);
+        data.append("armazemCocktail", armazemCocktail.value);
+        data.append("precoCocktail", precoCocktail.value);
+      }
+      if(tipo==="lancamento"){
+        data.append("produtoLancamento", produtoLancamento.value);
+        data.append("quantidadeLancamento", quantidadeLancamento.value);
+        data.append("armazemLancamento", armazemLancamento.value);
+        data.append("tipoLancamento", tipoLancamento.value);
+        data.append("precoLancamento", precoLancamento.value);
+      }
+
+      // ** Atenção **: aqui é que vai a tua URL de webhook
       fetch("https://script.google.com/macros/s/AKfycbxVTJuhbeuj2oJ1NdH4TQ9Ht0Z_SosWCccUt3psCHMHDFpU5jmFaWR9I7R66qYx475o/exec", {
+        method: "POST",
+        body: data
+      })
+      .then(r=>r.text())
+      .then(()=>{
+        mensagem.textContent = "✅ Enviado com sucesso!";
+        entradaForm.reset();
+        tipoEntrada.value = "";
+        Object.values(sections).forEach(sec=>sec.classList.add("hidden"));
+      })
+      .catch(()=>{
+        mensagem.textContent = "❌ Erro ao enviar.";
+      });
+    });
+
+    // regista service worker (PWA)
+    if('serviceWorker' in navigator){
+      navigator.serviceWorker.register('sw.js')
+        .catch(console.error);
+    }
+  </script>
+</body>
+</html>", {
         method: "POST",
         body: data
       })
