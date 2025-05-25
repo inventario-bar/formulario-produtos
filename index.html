@@ -129,7 +129,7 @@
         }
       });
 
-      entradaForm.addEventListener("submit", e => {
+     entradaForm.addEventListener("submit", e => {
   e.preventDefault();
   const payload = new URLSearchParams(new FormData(entradaForm)).toString();
   
@@ -140,7 +140,7 @@
     },
     body: payload
   })
-  .then(r => r.text()) // ✅ ESSENCIAL!
+  .then(r => r.text())
   .then(texto => {
     mensagem.textContent = texto;
     if (texto.startsWith("✅")) {
@@ -154,12 +154,6 @@
   });
 });
 
-.catch(err => {
-  mensagem.textContent = "❌ Erro ao enviar: " + err;
-});
-
-// ⬅️ ESTA PARTE FALTAVA
-});
 
 fetch("produtos.json")
 
