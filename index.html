@@ -149,16 +149,8 @@
       Object.values(sections).forEach(sec => sec.classList.add("hidden"));
     }
   })
-  .catch(err => {
-    mensagem.textContent = "❌ Erro ao enviar: " + err;
-  });
-});
-
-
+ 
 fetch("produtos.json")
-
-
-
       fetch("produtos.json")
         .then(r => r.json())
         .then(d => preencherSelect("produtoLancamento", d, "Seleciona um produto"));
