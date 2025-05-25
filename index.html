@@ -182,7 +182,7 @@ HTML <!DOCTYPE html>
 
       function preencherSelect(id, dados, placeholder) {
         const sel = document.getElementById(id);
-        sel.innerHTML = <option value="">${placeholder}</option>;
+        sel.innerHTML = `<option value="">${placeholder}</option>`;
         dados.forEach(item => {
           const o = document.createElement("option");
           o.value = item;
