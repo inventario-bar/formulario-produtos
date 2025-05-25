@@ -136,17 +136,13 @@
 
   fetch("https://script.google.com/macros/s/AKfycbxHQYf8BcCUYM_zf-XsRqZbVXboYxcUp8ih1xZj2sPpfen4lRvxjd5lEQi2ZqzxDgi8/exec", {
     method: "POST",
-    body: formData // sem header Content-Type
-  })
-  .then(r => r.json())
-  .then(resposta => {
-    mensagem.textContent = resposta.message || "✅ Enviado!";
-  })
-  .catch(err => {
-    mensagem.textContent = "❌ Erro ao enviar: " + err;
-    console.error(err);
+    mode: "no-cors",  // <- impede bloqueio de CORS
+    body: formData     // <- não definir headers
   });
+
+  mensagem.textContent = "✅ Enviado (sem resposta).";
 });
+
 
 
 fetch("produtos.json")
