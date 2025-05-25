@@ -130,30 +130,24 @@
       });
 
       entradaForm.addEventListener("submit", e => {
-        e.preventDefault();
-        const payload = new URLSearchParams(new FormData(entradaForm)).toString();
-        fetch("https://script.google.com/macros/s/AKfycbxHQYf8BcCUYM_zf-XsRqZbVXboYxcUp8ih1xZj2sPpfen4lRvxjd5lEQi2ZqzxDgi8/exec", {
-  method: "POST",
-  headers: {
-    "Content-Type": "application/x-www-form-urlencoded; charset=UTF-8"
-  },
-  body: payload
-})
-.then(r => r.json())
-.then(resposta => {
-  mensagem.textContent = resposta.message;
-  if (resposta.status === "success") {
-    entradaForm.reset();
-    tipoEntrada.value = "";
-    Object.values(sections).forEach(sec => sec.classList.add("hidden"));
-  }
-})
-.catch(err => {
-  mensagem.textContent = "❌ Erro ao enviar: " + err;
+  e.preventDefault();
+
+  const formData = new FormData(entradaForm);
+
+  fetch("https://script.google.com/macros/s/AKfycbxHQYf8BcCUYM_zf-XsRqZbVXboYxcUp8ih1xZj2sPpfen4lRvxjd5lEQi2ZqzxDgi8/exec", {
+    method: "POST",
+    body: formData // sem header Content-Type
+  })
+  .then(r => r.json())
+  .then(resposta => {
+    mensagem.textContent = resposta.message || "✅ Enviado!";
+  })
+  .catch(err => {
+    mensagem.textContent = "❌ Erro ao enviar: " + err;
+    console.error(err);
+  });
 });
 
-// ⬅️ ESTA PARTE FALTAVA
-});
 
 fetch("produtos.json")
 
