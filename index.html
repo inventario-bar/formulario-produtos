@@ -1,15 +1,13 @@
 <!DOCTYPE html>
 <html lang="pt">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Formulário de Produtos</title>
   <script src="https://cdn.tailwindcss.com"></script>
   <link rel="manifest" href="manifest.json">
   <meta name="theme-color" content="#28a745">
-  <!-- Tom Select -->
   <link href="https://cdn.jsdelivr.net/npm/tom-select@2.3.1/dist/css/tom-select.css" rel="stylesheet">
-  <script src="https://cdn.jsdelivr.net/npm/tom-select@2.3.1/dist/js/tom-select.complete.min.js"></script>
 </head>
 <body class="bg-gray-100 min-h-screen py-10 px-4">
 
@@ -32,8 +30,7 @@
       </select>
     </div>
 
-    <!-- ... CAMPOS OCULTOS ... -->
-
+    <!-- CAMPOS NOVO PRODUTO -->
     <div class="form-section hidden border-t pt-4" id="novoProdutoFields">
       <h3 class="text-lg font-semibold text-gray-700 mb-2">Novo Produto</h3>
       <div class="space-y-4">
@@ -45,11 +42,72 @@
           <select id="tipoGarrafa" name="tipoGarrafa"
                   class="p-2 w-full rounded-md border border-gray-300"></select>
         </label>
-        <!-- ... outros campos ... -->
+        <label class="block">Nº Doses por Garrafa
+          <input type="number" id="dosesGarrafa" name="dosesGarrafa"
+                 class="p-2 w-full rounded-md border border-gray-300">
+        </label>
+        <label class="block">Stock Mínimo
+          <input type="number" id="stockMinimo" name="stockMinimo"
+                 class="p-2 w-full rounded-md border border-gray-300">
+        </label>
       </div>
     </div>
 
-    <!-- ... OUTROS FORMULÁRIOS ... -->
+    <!-- CAMPOS COCKTAILS -->
+    <div class="form-section hidden border-t pt-4" id="cocktailsFields">
+      <h3 class="text-lg font-semibold text-gray-700 mb-2">Cocktails</h3>
+      <div class="space-y-4">
+        <label class="block">Nome do Cocktail
+          <select id="nomeCocktail" name="nomeCocktail"
+                  class="p-2 w-full rounded-md border border-gray-300"></select>
+        </label>
+        <label class="block">Quantidade
+          <input type="number" id="quantidadeCocktail" name="quantidadeCocktail"
+                 class="p-2 w-full rounded-md border border-gray-300">
+        </label>
+        <label class="block">Armazém
+          <select id="armazemCocktail" name="armazemCocktail"
+                  class="p-2 w-full rounded-md border border-gray-300"></select>
+        </label>
+        <label class="block">Preço
+          <input type="number" step="0.01" id="precoCocktail" name="precoCocktail"
+                 class="p-2 w-full rounded-md border border-gray-300">
+        </label>
+      </div>
+    </div>
+
+    <!-- CAMPOS LANÇAMENTO -->
+    <div class="form-section hidden border-t pt-4" id="lancamentoFields">
+      <h3 class="text-lg font-semibold text-gray-700 mb-2">Lançamento</h3>
+      <div class="space-y-4">
+        <label class="block">Produto
+          <select id="produtoLancamento" name="produtoLancamento"
+                  class="p-2 w-full rounded-md border border-gray-300"></select>
+        </label>
+        <label class="block">Quantidade
+          <input type="number" id="quantidadeLancamento" name="quantidadeLancamento"
+                 class="p-2 w-full rounded-md border border-gray-300">
+        </label>
+        <label class="block">Armazém
+          <select id="armazemLancamento" name="armazemLancamento"
+                  class="p-2 w-full rounded-md border border-gray-300"></select>
+        </label>
+        <label class="block">Tipo de Lançamento
+          <select id="tipoLancamento" name="tipoLancamento"
+                  class="p-2 w-full rounded-md border border-gray-300">
+            <option value="">Seleciona um tipo</option>
+            <option value="COMPRA">COMPRA</option>
+            <option value="VENDA">VENDA</option>
+            <option value="OFERTA">OFERTA</option>
+            <option value="INVENTARIO">INVENTARIO</option>
+          </select>
+        </label>
+        <label class="block">Preço
+          <input type="number" step="0.01" id="precoLancamento" name="precoLancamento"
+                 class="p-2 w-full rounded-md border border-gray-300">
+        </label>
+      </div>
+    </div>
 
     <button type="submit" class="w-full bg-green-600 text-white py-3 rounded-lg hover:bg-green-700 transition">
       Enviar
@@ -57,6 +115,7 @@
     <p id="mensagem" class="text-center text-sm text-gray-600"></p>
   </form>
 
+  <script src="https://cdn.jsdelivr.net/npm/tom-select@2.3.1/dist/js/tom-select.complete.min.js"></script>
   <script>
     document.addEventListener("DOMContentLoaded", () => {
       const tipoEntrada = document.getElementById("tipoEntrada");
@@ -70,9 +129,8 @@
 
       tipoEntrada.addEventListener("change", () => {
         Object.values(sections).forEach(sec => sec.classList.add("hidden"));
-        if (sections[tipoEntrada.value]) {
-          sections[tipoEntrada.value].classList.remove("hidden");
-        }
+        const sec = sections[tipoEntrada.value];
+        if (sec) sec.classList.remove("hidden");
       });
 
       entradaForm.addEventListener("submit", e => {
@@ -100,6 +158,17 @@
         });
       });
 
+      // Preencher selects com dados externos
+      fetch("produtos.json")
+        .then(r => r.json())
+        .then(d => preencherSelect("produtoLancamento", d, "Seleciona um produto"));
+      fetch("cocktails.json")
+        .then(r => r.json())
+        .then(d => preencherSelect("nomeCocktail", d, "Seleciona um cocktail"));
+      fetch("garrafas.json")
+        .then(r => r.json())
+        .then(d => preencherSelect("tipoGarrafa", d, "Seleciona o tipo de garrafa"));
+
       function preencherSelect(id, dados, placeholder) {
         const sel = document.getElementById(id);
         sel.innerHTML = `<option value="">${placeholder}</option>`;
@@ -109,29 +178,10 @@
           o.textContent = item;
           sel.appendChild(o);
         });
-
-        new TomSelect(sel, {
-          maxOptions: 1000,
-          create: false,
-          placeholder: placeholder,
-          closeAfterSelect: true,
-          allowEmptyOption: true,
-          persist: false,
-          highlight: true
-        });
+        if (["produtoLancamento", "nomeCocktail", "tipoGarrafa"].includes(id)) {
+          new TomSelect("#" + id, { create: false, sortField: "text" });
+        }
       }
-
-      fetch("produtos.json")
-        .then(r => r.json())
-        .then(d => preencherSelect("produtoLancamento", d, "Seleciona um produto"));
-
-      fetch("cocktails.json")
-        .then(r => r.json())
-        .then(d => preencherSelect("nomeCocktail", d, "Seleciona um cocktail"));
-
-      fetch("garrafas.json")
-        .then(r => r.json())
-        .then(d => preencherSelect("tipoGarrafa", d, "Seleciona o tipo de garrafa"));
 
       preencherSelect("armazemCocktail", ["ARMAZÉM 1", "ARMAZÉM 2 E OFERTAS"], "Seleciona um armazém");
       preencherSelect("armazemLancamento", ["ARMAZÉM 1", "ARMAZÉM 2 E OFERTAS"], "Seleciona um armazém");
@@ -143,3 +193,4 @@
   </script>
 </body>
 </html>
+
