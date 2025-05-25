@@ -130,24 +130,29 @@
       });
 
       entradaForm.addEventListener("submit", e => {
-        e.preventDefault();
-        const payload = new URLSearchParams(new FormData(entradaForm)).toString();
-        fetch("https://script.google.com/macros/s/AKfycbxb2imibO4Ids-kTZY45UegDG5xmE-JEk8uAWcghImSocF_Jzpx9MJEywL4SFtGEu7R/exec", {
-  method: "POST",
-  headers: {
-    "Content-Type": "application/x-www-form-urlencoded; charset=UTF-8"
-  },
-  body: payload
-})
-.then(r => r.text())
-.then(texto => {
-  mensagem.textContent = texto;
-  if (texto.startsWith("✅")) {
-    entradaForm.reset();
-    tipoEntrada.value = "";
-    Object.values(sections).forEach(sec => sec.classList.add("hidden"));
-  }
-})
+  e.preventDefault();
+  const payload = new URLSearchParams(new FormData(entradaForm)).toString();
+  
+  fetch("https://script.google.com/macros/s/AKfycbxb2imibO4Ids-kTZY45UegDG5xmE-JEk8uAWcghImSocF_Jzpx9MJEywL4SFtGEu7R/exec", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/x-www-form-urlencoded; charset=UTF-8"
+    },
+    body: payload
+  })
+  .then(r => r.text()) // ✅ ESSENCIAL!
+  .then(texto => {
+    mensagem.textContent = texto;
+    if (texto.startsWith("✅")) {
+      entradaForm.reset();
+      tipoEntrada.value = "";
+      Object.values(sections).forEach(sec => sec.classList.add("hidden"));
+    }
+  })
+  .catch(err => {
+    mensagem.textContent = "❌ Erro ao enviar: " + err;
+  });
+});
 
 .catch(err => {
   mensagem.textContent = "❌ Erro ao enviar: " + err;
