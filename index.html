@@ -1,4 +1,4 @@
-HTML <!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="pt">
 <head>
   <meta charset="UTF-8">
@@ -108,17 +108,12 @@ HTML <!DOCTYPE html>
     <button type="submit" class="w-full bg-green-600 text-white py-3 rounded-lg hover:bg-green-700 transition">
       Enviar
     </button>
-    <button type="button" id="btnAtualizarCocktails"
-            class="hidden w-full bg-blue-600 text-white py-3 rounded-lg hover:bg-blue-700 transition">
-      🔄 Atualizar Stock de Cocktails
-    </button>
     <p id="mensagem" class="text-center text-sm text-gray-600"></p>
   </form>
 
   <script>
     document.addEventListener("DOMContentLoaded", () => {
       const tipoEntrada = document.getElementById("tipoEntrada");
-      const btnAtualizarCocktails = document.getElementById("btnAtualizarCocktails");
       const entradaForm = document.getElementById("entradaForm");
       const mensagem = document.getElementById("mensagem");
       const sections = {
@@ -129,46 +124,34 @@ HTML <!DOCTYPE html>
 
       tipoEntrada.addEventListener("change", () => {
         Object.values(sections).forEach(sec => sec.classList.add("hidden"));
-        btnAtualizarCocktails.classList.add("hidden");
         if (sections[tipoEntrada.value]) {
           sections[tipoEntrada.value].classList.remove("hidden");
-          if (tipoEntrada.value === "cocktails") {
-            btnAtualizarCocktails.classList.remove("hidden");
-          }
         }
       });
 
       entradaForm.addEventListener("submit", e => {
         e.preventDefault();
         const payload = new URLSearchParams(new FormData(entradaForm)).toString();
-        fetch("https://script.google.com/macros/s/AKfycbxHQYf8BcCUYM_zf-XsRqZbVXboYxcUp8ih1xZj2sPpfen4lRvxjd5lEQi2ZqzxDgi8/exec", {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/x-www-form-urlencoded; charset=UTF-8"
-          },
-          body: payload
-        })
-        .then(r => r.text())
-        .then(text => {
-          mensagem.textContent = text;
-          if (text.startsWith("✅")) {
-            entradaForm.reset();
-            tipoEntrada.value = "";
-            Object.values(sections).forEach(sec => sec.classList.add("hidden"));
-            btnAtualizarCocktails.classList.add("hidden");
-          }
-        })
-        .catch(err => {
-          mensagem.textContent = "❌ Erro ao enviar: " + err;
-        });
-      });
+        fetch("https://script.google.com/macros/s/AKfycbx-nRW8TLO8pf5P1PJTtmUJZnx-vsDENjIhL0ut7Sz7usYRzSfySEiMUSXQQ1nVWk1w/exec", {
+  method: "POST",
+  headers: {
+    "Content-Type": "application/x-www-form-urlencoded; charset=UTF-8"
+  },
+  body: payload
+})
+.then(r => r.json())
+.then(resposta => {
+  mensagem.textContent = resposta.message;
+  if (resposta.status === "success") {
+    entradaForm.reset();
+    tipoEntrada.value = "";
+    Object.values(sections).forEach(sec => sec.classList.add("hidden"));
+  }
+})
+.catch(err => {
+  mensagem.textContent = "❌ Erro ao enviar: " + err;
+});
 
-      btnAtualizarCocktails.addEventListener("click", () => {
-        fetch("https://script.google.com/macros/s/AKfycbxVTJuhbeuj2oJ1NdH4TQ9Ht0Z_SosWCccUt3psCHMHDFpU5jmFaWR9I7R66qYx475o/exec?acao=atualizarStockCocktails")
-          .then(r => r.text())
-          .then(text => alert(text))
-          .catch(err => alert("❌ Erro ao atualizar stock: " + err));
-      });
 
       fetch("produtos.json")
         .then(r => r.json())
