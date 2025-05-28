@@ -193,23 +193,22 @@
 
       if ('serviceWorker' in navigator) {
         navigator.serviceWorker.register('sw.js').catch(console.error);
-        // BOTÃO DE VERIFICAÇÃO DE STOCK MÍNIMO
-document.getElementById("verificarStockMinimo").addEventListener("click", () => {
-  fetch("https://script.google.com/macros/s/AKfycbw2SV6WQYZny0XMm93b4-cx203bx2ikgGUnaa0FbfqwtfZ1C-hwTOUthYhxV-NtAIXp/exec?acao=alertaStockMinimo")
-  .then(r => r.text())
-  .then(alerta => {
-    alert(alerta);
-  })
-  .catch(() => {
-    alert("❌ Erro ao verificar o stock mínimo.");
-  });
+            // BOTÃO DE VERIFICAÇÃO DE STOCK MÍNIMO
+    const botao = document.getElementById("verificarStockMinimo");
+    if (botao) {
+      botao.addEventListener("click", () => {
+        fetch("https://script.google.com/macros/s/AKfycbw2SV6WQYZny0XMm93b4-cx203bx2ikgGUnaa0BbfqwtfZ1C-hwTOUthYhxV-NtAIXp/exec?acao=alertaStockMinimo")
+          .then(r => r.text())
+          .then(alerta => {
+            alert(alerta);
+          })
+          .catch(() => {
+            alert("❌ Erro ao verificar o stock mínimo.");
+          });
+      });
+    }
 
-    });
-});
-
-      }
-    });
-  </script>
+  }); // <-- fecha o DOMContentLoaded
+</script>
 </body>
 </html>
-
