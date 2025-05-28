@@ -15,6 +15,11 @@
      class="inline-flex items-center text-blue-600 hover:text-blue-800 font-medium mb-4">
     ← Voltar à página inicial
   </a>
+ <!-- BOTÃO STOCK MÍNIMO -->
+<button id="verificarStockMinimo"
+        class="mb-6 w-full bg-yellow-500 hover:bg-yellow-600 text-white font-semibold py-3 rounded-lg transition">
+  ⚠️ Verificar Stock Mínimo
+</button>
 
   <form id="entradaForm" class="bg-white shadow-md rounded-xl max-w-2xl mx-auto p-6 space-y-6">
     <h2 class="text-2xl font-bold text-center text-gray-800">Entrada de Produtos</h2>
@@ -188,6 +193,18 @@
 
       if ('serviceWorker' in navigator) {
         navigator.serviceWorker.register('sw.js').catch(console.error);
+        // BOTÃO DE VERIFICAÇÃO DE STOCK MÍNIMO
+document.getElementById("verificarStockMinimo").addEventListener("click", () => {
+  fetch("https://script.google.com/macros/s/AKfycbw2SV6WQYZny0XMm93b4-cx203bx2ikgGUnaa0FbfqwtfZ1C-hwTOUthYhxV-NtAIXp/exec")
+    .then(r => r.text())
+    .then(alerta => {
+      alert(alerta);
+    })
+    .catch(() => {
+      alert("❌ Erro ao verificar o stock mínimo.");
+    });
+});
+
       }
     });
   </script>
