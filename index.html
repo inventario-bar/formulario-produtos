@@ -173,7 +173,36 @@
           .catch(() => alert("❌ Erro ao verificar o stock mínimo."));
       });
     }
-  });
+ fetch("produtos.json")
+      .then(r => r.json())
+      .then(d => preencherSelect("produtoLancamento", d, "Seleciona um produto"));
+
+    fetch("cocktails.json")
+      .then(r => r.json())
+      .then(d => preencherSelect("nomeCocktail", d, "Seleciona um cocktail"));
+
+    fetch("garrafas.json")
+      .then(r => r.json())
+      .then(d => preencherSelect("tipoGarrafa", d, "Seleciona o tipo de garrafa"));
+
+    preencherSelect("armazemCocktail", ["ARMAZÉM 1", "ARMAZÉM 2 E OFERTAS"], "Seleciona um armazém");
+    preencherSelect("armazemLancamento", ["ARMAZÉM 1", "ARMAZÉM 2 E OFERTAS"], "Seleciona um armazém");
+
+    function preencherSelect(id, dados, placeholder) {
+      const sel = document.getElementById(id);
+      sel.innerHTML = `<option value="">${placeholder}</option>`;
+      dados.forEach(item => {
+        const o = document.createElement("option");
+        o.value = item;
+        o.textContent = item;
+        sel.appendChild(o);
+      });
+      if (["produtoLancamento", "nomeCocktail", "tipoGarrafa"].includes(id)) {
+        new TomSelect("#" + id, { create: false, sortField: "text" });
+      }
+    }
+
+  }); // FIM do DOMContentLoaded
 </script>
 </body>
 </html>
