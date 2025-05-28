@@ -121,34 +121,34 @@
   </form>
 
   <script src="https://cdn.jsdelivr.net/npm/tom-select@2.3.1/dist/js/tom-select.complete.min.js"></script>
-  <script>
-    document.addEventListener("DOMContentLoaded", () => {
-      const tipoEntrada = document.getElementById("tipoEntrada");
-      const entradaForm = document.getElementById("entradaForm");
-      const mensagem = document.getElementById("mensagem");
-      const sections = {
-        novoProduto: document.getElementById("novoProdutoFields"),
-        cocktails: document.getElementById("cocktailsFields"),
-        lancamento: document.getElementById("lancamentoFields")
-      };
+<script>
+  document.addEventListener("DOMContentLoaded", () => {
+    const tipoEntrada = document.getElementById("tipoEntrada");
+    const entradaForm = document.getElementById("entradaForm");
+    const mensagem = document.getElementById("mensagem");
+    const sections = {
+      novoProduto: document.getElementById("novoProdutoFields"),
+      cocktails: document.getElementById("cocktailsFields"),
+      lancamento: document.getElementById("lancamentoFields")
+    };
 
-      tipoEntrada.addEventListener("change", () => {
-        Object.values(sections).forEach(sec => sec.classList.add("hidden"));
-        const sec = sections[tipoEntrada.value];
-        if (sec) sec.classList.remove("hidden");
-      });
+    tipoEntrada.addEventListener("change", () => {
+      Object.values(sections).forEach(sec => sec.classList.add("hidden"));
+      const sec = sections[tipoEntrada.value];
+      if (sec) sec.classList.remove("hidden");
+    });
 
-      entradaForm.addEventListener("submit", e => {
-        e.preventDefault();
-        const payload = new URLSearchParams(new FormData(entradaForm)).toString();
+    entradaForm.addEventListener("submit", e => {
+      e.preventDefault();
+      const payload = new URLSearchParams(new FormData(entradaForm)).toString();
 
-        fetch("https://script.google.com/macros/s/AKfycbz7_gwBWywCAYeN6KbNhh65ouBA7sG96IFUHikgKNymRbDgsW3wnnwvXroyKwa69mEa/exec", {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/x-www-form-urlencoded; charset=UTF-8"
-          },
-          body: payload
-        })
+      fetch("https://script.google.com/macros/s/AKfycbz7_gwBWywCAYeN6KbNhh65ouBA7sG96IFUHikgKNymRbDgsW3wnnwvXroyKwa69mEa/exec", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/x-www-form-urlencoded; charset=UTF-8"
+        },
+        body: payload
+      })
         .then(r => r.text())
         .then(texto => {
           mensagem.textContent = texto;
@@ -161,56 +161,20 @@
         .catch(err => {
           mensagem.textContent = "❌ Erro ao enviar: " + err;
         });
-      });
+    });
 
-      // Preencher selects com dados externos
-      fetch("produtos.json")
-        .then(r => r.json())
-        .then(d => preencherSelect("produtoLancamento", d, "Seleciona um produto"));
-      fetch("cocktails.json")
-        .then(r => r.json())
-        .then(d => preencherSelect("nomeCocktail", d, "Seleciona um cocktail"));
-      fetch("garrafas.json")
-        .then(r => r.json())
-        .then(d => preencherSelect("tipoGarrafa", d, "Seleciona o tipo de garrafa"));
-
-      function preencherSelect(id, dados, placeholder) {
-        const sel = document.getElementById(id);
-        sel.innerHTML = `<option value="">${placeholder}</option>`;
-        dados.forEach(item => {
-          const o = document.createElement("option");
-          o.value = item;
-          o.textContent = item;
-          sel.appendChild(o);
-        });
-        if (["produtoLancamento", "nomeCocktail", "tipoGarrafa"].includes(id)) {
-          new TomSelect("#" + id, { create: false, sortField: "text" });
-        }
-      }
-
-      preencherSelect("armazemCocktail", ["ARMAZÉM 1", "ARMAZÉM 2 E OFERTAS"], "Seleciona um armazém");
-      preencherSelect("armazemLancamento", ["ARMAZÉM 1", "ARMAZÉM 2 E OFERTAS"], "Seleciona um armazém");
-
-      if ('serviceWorker' in navigator) {
-        navigator.serviceWorker.register('sw.js').catch(console.error);
-               });
-
-    // BOTÃO DE VERIFICAÇÃO DE STOCK MÍNIMO (dentro do DOMContentLoaded)
+    // === BOTÃO VERIFICAR STOCK MÍNIMO ===
     const botao = document.getElementById("verificarStockMinimo");
     if (botao) {
       botao.addEventListener("click", () => {
         fetch("https://script.google.com/macros/s/AKfycbz7_gwBWywCAYeN6KbNhh65ouBA7sG96IFUHikgKNymRbDgsW3wnnwvXroyKwa69mEa/exec?acao=alertaStockMinimo")
           .then(r => r.text())
-          .then(alerta => {
-            alert(alerta);
-          })
-          .catch(() => {
-            alert("❌ Erro ao verificar o stock mínimo.");
-          });
+          .then(alerta => alert(alerta))
+          .catch(() => alert("❌ Erro ao verificar o stock mínimo."));
       });
     }
-
-  }); // <--- FECHA O DOMContentLoaded corretamente
+  });
 </script>
 </body>
 </html>
+
