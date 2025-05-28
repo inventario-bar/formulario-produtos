@@ -195,7 +195,7 @@
         navigator.serviceWorker.register('sw.js').catch(console.error);
         // BOTÃO DE VERIFICAÇÃO DE STOCK MÍNIMO
 document.getElementById("verificarStockMinimo").addEventListener("click", () => {
-  fetch("https://script.google.com/macros/s/AKfycbw2SV6WQYZny0XMm93b4-cx203bx2ikgGUnaa0FbfqwtfZ1C-hwTOUthYhxV-NtAIXp/exec")
+  fetch("https://script.google.com/macros/s/AKfycbw2SV6WQYZny0XMm93b4-cx203bx2ikgGUnaa0FbfqwtfZ1C-hwTOUthYhxV-NtAIXp/exec?acao=alertaStockMinimo")
     .then(r => r.text())
     .then(alerta => {
       alert(alerta);
