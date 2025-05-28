@@ -193,7 +193,9 @@
 
       if ('serviceWorker' in navigator) {
         navigator.serviceWorker.register('sw.js').catch(console.error);
-            // BOTÃO DE VERIFICAÇÃO DE STOCK MÍNIMO
+               });
+
+    // BOTÃO DE VERIFICAÇÃO DE STOCK MÍNIMO (dentro do DOMContentLoaded)
     const botao = document.getElementById("verificarStockMinimo");
     if (botao) {
       botao.addEventListener("click", () => {
@@ -208,7 +210,7 @@
       });
     }
 
-  }); // <-- fecha o DOMContentLoaded
+  }); // <--- FECHA O DOMContentLoaded corretamente
 </script>
 </body>
 </html>
