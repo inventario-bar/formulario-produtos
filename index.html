@@ -142,7 +142,7 @@
         e.preventDefault();
         const payload = new URLSearchParams(new FormData(entradaForm)).toString();
 
-        fetch("https://script.google.com/macros/s/AKfycbw2SV6WQYZny0XMm93b4-cx203bx2ikgGUnaa0FbfqwtfZ1C-hwTOUthYhxV-NtAIXp/exec", {
+        fetch("https://script.google.com/macros/s/AKfycbz7_gwBWywCAYeN6KbNhh65ouBA7sG96IFUHikgKNymRbDgsW3wnnwvXroyKwa69mEa/exec", {
           method: "POST",
           headers: {
             "Content-Type": "application/x-www-form-urlencoded; charset=UTF-8"
@@ -199,7 +199,7 @@
     const botao = document.getElementById("verificarStockMinimo");
     if (botao) {
       botao.addEventListener("click", () => {
-        fetch("https://script.google.com/macros/s/AKfycbw2SV6WQYZny0XMm93b4-cx203bx2ikgGUnaa0FbfqwtfZ1C-hwTOUthYhxV-NtAIXp/exec?acao=alertaStockMinimo")
+        fetch("https://script.google.com/macros/s/AKfycbz7_gwBWywCAYeN6KbNhh65ouBA7sG96IFUHikgKNymRbDgsW3wnnwvXroyKwa69mEa/exec?acao=alertaStockMinimo")
           .then(r => r.text())
           .then(alerta => {
             alert(alerta);
