@@ -82,7 +82,7 @@
           <input type="number" id="quantidadeCocktail" name="quantidadeCocktail"
                  class="p-2 w-full rounded-md border border-gray-300">
         </label>
-        <label class="block">Armazém
+        <label class="block">Armazém / Tipo
           <select id="armazemCocktail" name="armazemCocktail"
                   class="p-2 w-full rounded-md border border-gray-300"></select>
         </label>
@@ -118,7 +118,7 @@
             <option value="">Seleciona um tipo</option>
             <option value="COMPRA">COMPRA</option>
             <option value="VENDA">VENDA</option>
-            <option value="OFERTA" id="opcaoOferta">OFERTA</option>
+            <option value="OFERTA" id="opcaoOfertaLancamento">OFERTA</option>
             <option value="INVENTARIO">INVENTARIO</option>
           </select>
         </label>
@@ -180,7 +180,7 @@
       const empresa = document.getElementById("empresa");
       const tipoEntrada = document.getElementById("tipoEntrada");
       const tipoLancamento = document.getElementById("tipoLancamento");
-      const opcaoOferta = document.getElementById("opcaoOferta");
+      const opcaoOfertaLancamento = document.getElementById("opcaoOfertaLancamento");
       const camposCompra = document.getElementById("camposCompra");
       const entradaForm = document.getElementById("entradaForm");
       const mensagem = document.getElementById("mensagem");
@@ -192,23 +192,23 @@
         lancamento: document.getElementById("lancamentoFields")
       };
 
+      let tomProduto = null;
+      let tomCocktail = null;
+      let tomGarrafa = null;
+
       function obterUrlAtual() {
         return URLS[empresa.value] || "";
       }
 
-      function atualizarEmpresa() {
-        const empresaSelecionada = empresa.value;
-
-        if (empresaSelecionada === "DIVINI") {
-          opcaoOferta.style.display = "none";
+      function atualizarOfertaLancamento() {
+        if (empresa.value === "DIVINI") {
+          opcaoOfertaLancamento.style.display = "none";
           if (tipoLancamento.value === "OFERTA") {
             tipoLancamento.value = "";
           }
         } else {
-          opcaoOferta.style.display = "block";
+          opcaoOfertaLancamento.style.display = "block";
         }
-
-        atualizarCamposCompra();
       }
 
       function atualizarCamposCompra() {
@@ -220,6 +220,31 @@
           document.getElementById("mesLancamento").value = "";
           document.getElementById("anoLancamento").value = "";
         }
+      }
+
+      function preencherArmazensCocktail() {
+        const select = document.getElementById("armazemCocktail");
+        let opcoes = [];
+
+        if (empresa.value === "LA BAMBA") {
+          opcoes = ["ARMAZÉM 1", "ARMAZÉM 2 E OFERTAS", "OFERTA"];
+        } else if (empresa.value === "DIVINI") {
+          opcoes = ["ARMAZÉM 1", "ARMAZÉM 2 E OFERTAS"];
+        }
+
+        select.innerHTML = `<option value="">Seleciona um armazém</option>`;
+        opcoes.forEach(item => {
+          const o = document.createElement("option");
+          o.value = item;
+          o.textContent = item;
+          select.appendChild(o);
+        });
+      }
+
+      function atualizarEmpresa() {
+        atualizarOfertaLancamento();
+        atualizarCamposCompra();
+        preencherArmazensCocktail();
       }
 
       empresa.addEventListener("change", atualizarEmpresa);
@@ -240,6 +265,11 @@
           return;
         }
 
+        if (empresa.value === "DIVINI" && tipoEntrada.value === "lancamento" && tipoLancamento.value === "OFERTA") {
+          mensagem.textContent = "❌ O DIVINI não usa OFERTA.";
+          return;
+        }
+
         if (tipoEntrada.value === "lancamento" && tipoLancamento.value === "COMPRA") {
           const fornecedor = document.getElementById("fornecedorLancamento").value.trim();
           const mes = document.getElementById("mesLancamento").value.trim();
@@ -249,11 +279,6 @@
             mensagem.textContent = "❌ Na COMPRA tens de preencher fornecedor, mês e ano.";
             return;
           }
-        }
-
-        if (empresa.value === "DIVINI" && tipoEntrada.value === "lancamento" && tipoLancamento.value === "OFERTA") {
-          mensagem.textContent = "❌ O DIVINI não usa OFERTA.";
-          return;
         }
 
         const url = obterUrlAtual();
@@ -304,22 +329,23 @@
 
       fetch("produtos.json")
         .then(r => r.json())
-        .then(d => preencherSelect("produtoLancamento", d, "Seleciona um produto"));
+        .then(d => preencherSelect("produtoLancamento", d, "Seleciona um produto", "produto"));
 
       fetch("cocktails.json")
         .then(r => r.json())
-        .then(d => preencherSelect("nomeCocktail", d, "Seleciona um cocktail"));
+        .then(d => preencherSelect("nomeCocktail", d, "Seleciona um cocktail", "cocktail"));
 
       fetch("garrafas.json")
         .then(r => r.json())
-        .then(d => preencherSelect("tipoGarrafa", d, "Seleciona o tipo de garrafa"));
+        .then(d => preencherSelect("tipoGarrafa", d, "Seleciona o tipo de garrafa", "garrafa"));
 
-      preencherSelect("armazemCocktail", ["ARMAZÉM 1", "ARMAZÉM 2 E OFERTAS"], "Seleciona um armazém");
-      preencherSelect("armazemLancamento", ["ARMAZÉM 1", "ARMAZÉM 2 E OFERTAS"], "Seleciona um armazém");
+      preencherSelect("armazemLancamento", ["ARMAZÉM 1", "ARMAZÉM 2 E OFERTAS"], "Seleciona um armazém", "normal");
+      preencherArmazensCocktail();
 
-      function preencherSelect(id, dados, placeholder) {
+      function preencherSelect(id, dados, placeholder, tipo) {
         const sel = document.getElementById(id);
         sel.innerHTML = `<option value="">${placeholder}</option>`;
+
         dados.forEach(item => {
           const o = document.createElement("option");
           o.value = item;
@@ -327,8 +353,19 @@
           sel.appendChild(o);
         });
 
-        if (["produtoLancamento", "nomeCocktail", "tipoGarrafa"].includes(id)) {
-          new TomSelect("#" + id, { create: false, sortField: "text" });
+        if (tipo === "produto") {
+          if (tomProduto) tomProduto.destroy();
+          tomProduto = new TomSelect("#" + id, { create: false, sortField: "text" });
+        }
+
+        if (tipo === "cocktail") {
+          if (tomCocktail) tomCocktail.destroy();
+          tomCocktail = new TomSelect("#" + id, { create: false, sortField: "text" });
+        }
+
+        if (tipo === "garrafa") {
+          if (tomGarrafa) tomGarrafa.destroy();
+          tomGarrafa = new TomSelect("#" + id, { create: false, sortField: "text" });
         }
       }
 
